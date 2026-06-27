@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPEI — Budget &amp; Finances — Logiciel libre pour collectivités</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.5.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bleu:       #1a3a5c;
+  --bleu-med:   #2563a8;
+  --bleu-clair: #dbeafe;
+  --bleu-pale:  #eff6ff;
+  --vert:       #16a34a;
+  --orange:     #ea580c;
+  --rouge:      #dc2626;
+  --gris-bg:    #f8fafc;
+  --gris-bord:  #e2e8f0;
+  --gris-txt:   #374151;
+  --gris-doux:  #64748b;
+  --blanc:      #ffffff;
+  --radius:     10px;
+  --font:       'DM Sans', system-ui, sans-serif;
+  --font-serif: 'DM Serif Display', serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--gris-bg);
+  color: var(--gris-txt);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bleu);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 52px;
+}
+.nav-brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-brand span { color: #93c5fd; font-weight: 400; }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+  font-size: 13px;
+  color: #93c5fd;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background .15s, color .15s;
+}
+.nav-links a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-dl {
+  background: var(--vert);
+  color: #fff !important;
+  font-weight: 500;
+}
+.nav-dl:hover { background: #15803d !important; }
+
+/* ── LAYOUT ── */
+.page { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── SECTION TITLES ── */
+.section-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--bleu-med);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 400;
+  color: var(--bleu);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.section-sub {
+  font-size: 15px;
+  color: var(--gris-doux);
+  max-width: 560px;
+  margin-bottom: 32px;
+}
+
+/* ════════════ SECTION 1 — HERO ════════════ */
+#accueil {
+  background: var(--bleu);
+  color: #fff;
+  padding: 64px 0 56px;
+  margin-bottom: 64px;
+}
+#accueil .page { padding-bottom: 0; }
+
+.hero-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #93c5fd;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.hero-h1 {
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: #fff;
+  max-width: 600px;
+}
+.hero-sub {
+  font-size: 16px;
+  color: #bfdbfe;
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--vert);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s;
+}
+.btn-primary:hover { background: #15803d; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+.hero-metrics {
+  display: flex;
+  gap: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  flex-wrap: wrap;
+}
+.hero-metric-val {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: #fff;
+}
+.hero-metric-label { font-size: 12px; color: #93c5fd; margin-top: 2px; }
+
+.libre-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(22,163,74,0.25);
+  border: 1px solid rgba(22,163,74,0.4);
+  color: #86efac;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+/* Feature cards */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 14px;
+  margin-bottom: 48px;
+}
+.feat-card {
+  background: var(--blanc);
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--radius);
+  padding: 18px;
+  border-top: 3px solid var(--bleu-med);
+  transition: border-top-color .15s;
+}
+.feat-card:hover { border-top-color: var(--vert); }
+.feat-icon { font-size: 22px; color: var(--bleu-med); margin-bottom: 10px; }
+.feat-title { font-size: 14px; font-weight: 700; color: var(--bleu); margin-bottom: 5px; }
+.feat-desc { font-size: 13px; color: var(--gris-doux); line-height: 1.5; }
+
+/* ════════════ SECTION 2 — SIMULATEUR ════════════ */
+#simulateur { margin-bottom: 64px; }
+
+.sim-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 600px) { .sim-layout { grid-template-columns: 1fr; } }
+
+.sim-card {
+  background: var(--blanc);
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.sim-card-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--gris-doux);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sim-slider-row { margin-bottom: 12px; }
+.sim-slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.sim-slider-name { font-size: 13px; color: var(--gris-txt); }
+.sim-slider-val { font-size: 13px; font-weight: 700; color: var(--bleu); }
+input[type=range] {
+  width: 100%;
+  accent-color: var(--bleu-med);
+  height: 4px;
+  cursor: pointer;
+}
+
+.sim-cascade {
+  background: var(--blanc);
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+.sim-cascade-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--gris-doux);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sim-cascade-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gris-bord);
+  font-size: 13px;
+}
+.sim-cascade-row:last-child { border-bottom: none; font-weight: 700; font-size: 14px; }
+.sim-cascade-name { color: var(--gris-txt); display: flex; align-items: center; gap: 6px; }
+.sim-cascade-val { font-weight: 600; }
+
+.sim-result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 600px) { .sim-result-grid { grid-template-columns: 1fr 1fr; } }
+
+.sim-result-item {
+  background: var(--blanc);
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.sim-result-label { font-size: 11px; color: var(--gris-doux); margin-bottom: 5px; line-height: 1.3; }
+.sim-result-val { font-size: 20px; font-weight: 700; }
+.sim-result-sub { font-size: 11px; margin-top: 3px; }
+.col-green { color: var(--vert); }
+.col-orange { color: var(--orange); }
+.col-red { color: var(--rouge); }
+.col-blue { color: var(--bleu-med); }
+
+/* ════════════ SECTION 3 — MOCKUP ════════════ */
+#interface { margin-bottom: 64px; }
+
+.mock-frame {
+  background: var(--gris-bg);
+  border: 1px solid var(--gris-bord);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.mock-topbar {
+  background: var(--bleu);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mock-dot { width: 11px; height: 11px; border-radius: 50%; }
+.mock-bar-title { font-size: 12px; color: #93c5fd; flex: 1; text-align: center; }
+
+.mock-body { display: flex; min-height: 460px; }
+
+.mock-sidebar {
+  width: 175px;
+  background: #1e3351;
+  flex-shrink: 0;
+  padding: 12px 0 20px;
+}
+.mock-sb-logo { padding: 8px 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 8px; }
+.mock-sb-logo-t { font-size: 11px; font-weight: 700; color: #fff; }
+.mock-sb-logo-s { font-size: 9px; color: #5a82ac; margin-top: 2px; }
+.mock-sb-sec { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: #3d6494; padding: 10px 14px 4px; }
+.mock-sb-item { padding: 6px 14px; font-size: 11px; color: #93b4d8; cursor: pointer; border-left: 3px solid transparent; }
+.mock-sb-item.active { color: #fff; background: rgba(255,255,255,0.08); border-left-color: #60a5fa; }
+.mock-sb-btn {
+  margin: 14px 10px 0;
+  background: rgba(96,165,250,0.15);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 10px;
+  color: #93c5fd;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mock-content {
+  flex: 1;
+  padding: 16px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+.mock-tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+.mock-tab {
+  font-size: 10px;
+  padding: 4px 12px;
+  border-radius: 5px;
+  color: var(--gris-doux);
+  background: #e2e8f0;
+  cursor: pointer;
+}
+.mock-tab.active { background: var(--bleu-med); color: #fff; }
+
+.mock-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.mock-kpi {
+  background: #fff;
+  border: 1px solid var(--gris-bord);
+  border-radius: 7px;
+  padding: 10px;
+  border-top: 2px solid var(--bleu-med);
+}
+.mock-kpi-l { font-size: 9px; color: var(--gris-doux); text-transform: uppercase; margin-bottom: 3px; }
+.mock-kpi-v { font-size: 14px; font-weight: 700; color: var(--bleu); }
+.mock-kpi-s { font-size: 9px; color: var(--gris-doux); margin-top: 1px; }
+
+.mock-table-wrap { background: #fff; border: 1px solid var(--gris-bord); border-radius: 7px; overflow: hidden; margin-bottom: 12px; }
+.mock-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+.mock-table thead tr { background: var(--bleu); }
+.mock-table thead th { padding: 7px 10px; color: #fff; font-weight: 600; text-align: left; }
+.mock-table tbody tr:nth-child(even) { background: var(--bleu-pale); }
+.mock-table tbody td { padding: 5px 10px; border-bottom: 1px solid #f1f5f9; }
+.bar-cell { display: flex; align-items: center; gap: 5px; }
+.bar-wrap { width: 44px; height: 4px; background: var(--gris-bord); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; }
+
+.mock-chart { background: #fff; border: 1px solid var(--gris-bord); border-radius: 7px; padding: 10px 12px; }
+.mock-chart-t { font-size: 9px; color: var(--gris-doux); margin-bottom: 8px; }
+.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 72px; }
+.bar-grp { display: flex; gap: 2px; align-items: flex-end; flex: 1; }
+.bar-c { border-radius: 3px 3px 0 0; flex: 1; }
+.chart-years { display: flex; gap: 6px; margin-top: 4px; }
+.chart-year { flex: 1; text-align: center; font-size: 9px; color: #94a3b8; }
+.chart-legend { display: flex; gap: 10px; margin-top: 6px; }
+.leg-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.leg-l { font-size: 9px; color: var(--gris-doux); }
+
+/* ════════════ SECTION 4 — CONTACT ════════════ */
+#contact { margin-bottom: 64px; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-info p { font-size: 14px; color: var(--gris-doux); line-height: 1.7; margin-bottom: 20px; }
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.contact-item-icon { font-size: 18px; color: var(--bleu-med); margin-top: 1px; flex-shrink: 0; }
+.contact-item-text { font-size: 13px; color: var(--gris-txt); line-height: 1.5; }
+.contact-item-text strong { color: var(--bleu); display: block; font-size: 14px; }
+
+.contact-form {
+  background: var(--blanc);
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bleu);
+  margin-bottom: 5px;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--gris-bord);
+  border-radius: 6px;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--gris-txt);
+  background: var(--gris-bg);
+  transition: border-color .15s;
+  outline: none;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--bleu-med);
+  background: #fff;
+}
+.form-textarea { min-height: 90px; resize: vertical; }
+.form-submit {
+  width: 100%;
+  background: var(--bleu);
+  color: #fff;
+  border: none;
+  padding: 11px;
+  border-radius: 7px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: background .15s;
+}
+.form-submit:hover { background: var(--bleu-med); }
+.form-note { font-size: 11px; color: var(--gris-doux); margin-top: 8px; text-align: center; }
+.form-success {
+  display: none;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 7px;
+  padding: 16px;
+  text-align: center;
+  color: #166534;
+  font-size: 14px;
+}
+
+/* ════════════ FOOTER ════════════ */
+footer {
+  background: var(--bleu);
+  color: #93c5fd;
+  font-size: 12px;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+footer strong { color: #fff; }
+
+/* ════════════ UTILS ════════════ */
+.divider { height: 1px; background: var(--gris-bord); margin: 0 0 48px; }
+.pill-ok { background: #dcfce7; color: #166534; font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+.pill-warn { background: #ffedd5; color: #9a3412; font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+.pill-bad { background: #fee2e2; color: #991b1b; font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+
+.cta-banner {
+  background: var(--bleu);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+.cta-banner h3 { font-size: 17px; color: #fff; font-weight: 700; margin-bottom: 4px; }
+.cta-banner p { font-size: 13px; color: #93c5fd; }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-brand">
+    <i class="ti ti-building-community" style="font-size:18px"></i>
+    PPEI — Budget &amp; Finances
+    <span>v2.1.0</span>
+  </div>
+  <div class="nav-links">
+    <a href="#accueil">Présentation</a>
+    <a href="#simulateur">Simulateur</a>
+    <a href="#interface">Interface</a>
+    <a href="#contact" class="nav-dl"><i class="ti ti-mail" style="font-size:13px;vertical-align:-2px"></i> Demander l'application</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 1 — HERO
+══════════════════════════════════════ -->
+<section id="accueil">
+  <div class="page">
+    <div class="libre-badge">
+      <i class="ti ti-lock-open" style="font-size:13px"></i>
+      Logiciel libre — gratuit — sans cloud
+    </div>
+    <p class="hero-eyebrow">PPEI — Plateforme Publique d'Échanges et d'Informations</p>
+    <h1 class="hero-h1">Vos finances communales,<br>enfin lisibles.</h1>
+    <p class="hero-sub">PPEI-Budget&amp;Finances transforme vos exports comptables M57 en tableaux de bord clairs — sans formation comptable, sans abonnement, sans données qui quittent votre poste.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <i class="ti ti-download"></i>
+        Demander l'application
+      </a>
+      <a href="#simulateur" class="btn-secondary">
+        <i class="ti ti-player-play"></i>
+        Essayer le simulateur
+      </a>
+    </div>
+    <div class="hero-metrics">
+      <div>
+        <div class="hero-metric-val">9</div>
+        <div class="hero-metric-label">onglets d'analyse</div>
+      </div>
+      <div>
+        <div class="hero-metric-val">40+</div>
+        <div class="hero-metric-label">ratios M57 calculés</div>
+      </div>
+      <div>
+        <div class="hero-metric-val">0 €</div>
+        <div class="hero-metric-label">coût de licence</div>
+      </div>
+      <div>
+        <div class="hero-metric-val">∞</div>
+        <div class="hero-metric-label">budgets analysables</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="page">
+
+  <!-- Fonctionnalités -->
+  <div style="padding-top:52px;margin-bottom:12px">
+    <p class="section-eyebrow">Ce que vous obtenez</p>
+    <h2 class="section-title">Un outil complet,<br>pensé pour les non-comptables</h2>
+    <p class="section-sub">Conçu pour les élus, les secrétaires de mairie et les techniciens qui veulent comprendre leurs finances sans décrypter le M57 seuls.</p>
+  </div>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-chart-bar"></i></div>
+      <div class="feat-title">Vue d'ensemble</div>
+      <div class="feat-desc">Prévu / Réalisé / Taux par chapitre, section et sens, en un coup d'œil.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-trending-up"></i></div>
+      <div class="feat-title">Évolution N-5</div>
+      <div class="feat-desc">Graphiques historiques sur 5 exercices pour voir les tendances de fond.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-math"></i></div>
+      <div class="feat-title">40+ ratios M57</div>
+      <div class="feat-desc">Épargne, endettement, investissement — avec seuils indicatifs colorés automatiques.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-book"></i></div>
+      <div class="feat-title">Grand Livre</div>
+      <div class="feat-desc">Top 30 tiers, écritures par article, filtre par chapitre — toute la granularité.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-file-type-pdf"></i></div>
+      <div class="feat-title">Export PDF</div>
+      <div class="feat-desc">Rapport complet prêt à imprimer ou présenter en conseil municipal.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-files"></i></div>
+      <div class="feat-title">Multi-budgets</div>
+      <div class="feat-desc">Communal, CCAS, lotissement — un filtre suffit pour basculer entre budgets.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-shield-check"></i></div>
+      <div class="feat-title">100 % local</div>
+      <div class="feat-desc">Vos données ne quittent jamais votre poste. Aucun serveur, aucun nuage.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><i class="ti ti-settings-2"></i></div>
+      <div class="feat-title">Saisie complémentaire</div>
+      <div class="feat-desc">Bilan, fiscalité, dette — débloquez les ratios patrimoniaux et de trésorerie.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — SIMULATEUR
+  ══════════════════════════════════════ -->
+  <section id="simulateur" style="margin-bottom:56px">
+    <p class="section-eyebrow">Simulateur interactif</p>
+    <h2 class="section-title">Testez les calculs M57<br>en temps réel</h2>
+    <p class="section-sub">Bougez les curseurs — la cascade épargne brute → épargne nette se recalcule instantanément. Ce sont exactement les formules utilisées dans l'application.</p>
+
+    <div class="sim-layout">
+      <div class="sim-card">
+        <div class="sim-card-title"><i class="ti ti-arrow-up-right" style="font-size:13px;color:var(--vert)"></i> Recettes de fonctionnement</div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-label">
+            <span class="sim-slider-name">Fiscalité locale (chap. 73)</span>
+            <span class="sim-slider-val" id="v73">800 k€</span>
+          </div>
+          <input type="range" min="200" max="2000" step="50" value="800" id="s73">
+        </div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-label">
+            <span class="sim-slider-name">Dotations État (chap. 74)</span>
+            <span class="sim-slider-val" id="v74">350 k€</span>
+          </div>
+          <input type="range" min="100" max="1000" step="25" value="350" id="s74">
+        </div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-label">
+            <span class="sim-slider-name">Autres produits (chap. 70+75)</span>
+            <span class="sim-slider-val" id="v70">120 k€</span>
+          </div>
+          <input type="range" min="0" max="500" step="10" value="120" id="s70">
+        </div>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-card-title"><i class="ti ti-arrow-down-right" style="font-size:13px;color:var(--orange)"></i> Dépenses de fonctionnement</div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-label">
+            <span class="sim-slider-name">Personnel (chap. 012)</span>
+            <span class="sim-slider-val" id="v012">560 k€</span>
+          </div>
+          <input type="range" min="100" max="1500" step="20" value="560" id="s012">
+        </div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-label">
+            <span class="sim-slider-name">Charges générales (chap. 011)</span>
+            <span class="sim-slider-val" id="v011">220 k€</span>
+          </div>
+          <input type="range" min="50" max="800" step="10" value="220" id="s011">
+        </div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-label">
+            <span class="sim-slider-name">Annuités emprunt (chap. 16)</span>
+            <span class="sim-slider-val" id="v16">80 k€</span>
+          </div>
+          <input type="range" min="0" max="400" step="10" value="80" id="s16">
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-cascade">
+      <div class="sim-cascade-title"><i class="ti ti-layers-intersect" style="font-size:13px"></i> Cascade M57 — auto-financement</div>
+      <div class="sim-cascade-row">
+        <span class="sim-cascade-name">Recettes réelles de fonctionnement (RRF)</span>
+        <span class="sim-cascade-val col-blue" id="rrf">—</span>
+      </div>
+      <div class="sim-cascade-row">
+        <span class="sim-cascade-name">Dépenses réelles de fonctionnement (DRF)</span>
+        <span class="sim-cascade-val col-orange" id="drf">—</span>
+      </div>
+      <div class="sim-cascade-row">
+        <span class="sim-cascade-name"><i class="ti ti-minus" style="font-size:12px;color:var(--gris-doux)"></i> Épargne brute</span>
+        <span class="sim-cascade-val" id="eb">—</span>
+      </div>
+      <div class="sim-cascade-row">
+        <span class="sim-cascade-name"><i class="ti ti-minus" style="font-size:12px;color:var(--gris-doux)"></i> Épargne nette (après remboursement capital)</span>
+        <span class="sim-cascade-val" id="en">—</span>
+      </div>
+    </div>
+
+    <div class="sim-result-grid">
+      <div class="sim-result-item">
+        <div class="sim-result-label">Taux d'épargne brute</div>
+        <div class="sim-result-val" id="teb">—</div>
+        <div class="sim-result-sub" id="teb-st">—</div>
+      </div>
+      <div class="sim-result-item">
+        <div class="sim-result-label">Poids du personnel / DRF</div>
+        <div class="sim-result-val" id="tpers">—</div>
+        <div class="sim-result-sub" id="tpers-st">—</div>
+      </div>
+      <div class="sim-result-item">
+        <div class="sim-result-label">Autonomie financière</div>
+        <div class="sim-result-val" id="taut">—</div>
+        <div class="sim-result-sub" id="taut-st">—</div>
+      </div>
+      <div class="sim-result-item">
+        <div class="sim-result-label">Capacité de désendettement</div>
+        <div class="sim-result-val" id="tdet">—</div>
+        <div class="sim-result-sub" id="tdet-st">—</div>
+      </div>
+    </div>
+
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--radius);padding:14px 18px;font-size:13px;color:#1e40af;margin-top:4px">
+      <strong>Ces calculs utilisent exactement les formules M57 de PPEI-Budget&amp;Finances.</strong>
+      Avec vos vrais exports CSV, vous obtenez ce tableau de bord pour l'ensemble de vos budgets — communal, CCAS, annexes.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — MOCKUP INTERFACE
+  ══════════════════════════════════════ -->
+  <section id="interface" style="margin-bottom:56px">
+    <p class="section-eyebrow">Interface de l'application</p>
+    <h2 class="section-title">À quoi ressemble<br>PPEI-Budget&amp;Finances ?</h2>
+    <p class="section-sub">Un tableau de bord dans votre navigateur, lancé depuis votre poste Windows. Aucun compte, aucune connexion internet requise.</p>
+
+    <div class="mock-frame">
+      <div class="mock-topbar">
+        <div class="mock-dot" style="background:#ff5f57"></div>
+        <div class="mock-dot" style="background:#febc2e"></div>
+        <div class="mock-dot" style="background:#28c840"></div>
+        <div class="mock-bar-title">PPEI — Budget &amp; Finances v2.1.0 &nbsp;—&nbsp; Budget Communal 2025 &nbsp;—&nbsp; localhost:8501</div>
+      </div>
+      <div class="mock-body">
+        <div class="mock-sidebar">
+          <div class="mock-sb-logo">
+            <div class="mock-sb-logo-t">PPEI Budget &amp; Finances</div>
+            <div class="mock-sb-logo-s">Budget Communal 2025</div>
+          </div>
+          <div class="mock-sb-sec">Onglets</div>
+          <div class="mock-sb-item active">Vue d'ensemble</div>
+          <div class="mock-sb-item">Fonctionnement</div>
+          <div class="mock-sb-item">Investissement</div>
+          <div class="mock-sb-item">Évolution N-5</div>
+          <div class="mock-sb-item">Grand Livre</div>
+          <div class="mock-sb-item">Tableau brut</div>
+          <div class="mock-sb-item">Analyse résultat</div>
+          <div class="mock-sb-item">Ratios M57</div>
+          <div class="mock-sb-item">Saisie complémentaire</div>
+          <div class="mock-sb-btn"><i class="ti ti-file-type-pdf" style="font-size:13px;vertical-align:-2px"></i> Générer le PDF complet</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-tabs">
+            <div class="mock-tab active">Fonctionnement</div>
+            <div class="mock-tab">Investissement</div>
+            <div class="mock-tab">Global</div>
+          </div>
+          <div class="mock-kpi-row">
+            <div class="mock-kpi">
+              <div class="mock-kpi-l">Recettes prévues</div>
+              <div class="mock-kpi-v">1 270 k€</div>
+              <div class="mock-kpi-s">RRF fonctionnement</div>
+            </div>
+            <div class="mock-kpi">
+              <div class="mock-kpi-l">Réalisé</div>
+              <div class="mock-kpi-v">1 089 k€</div>
+              <div class="mock-kpi-s" style="color:var(--bleu-med)">85,7 % encaissé</div>
+            </div>
+            <div class="mock-kpi" style="border-top-color:var(--vert)">
+              <div class="mock-kpi-l">Épargne brute</div>
+              <div class="mock-kpi-v" style="color:var(--vert)">309 k€</div>
+              <div class="mock-kpi-s" style="color:var(--vert)">Taux : 24,3 %</div>
+            </div>
+            <div class="mock-kpi" style="border-top-color:var(--orange)">
+              <div class="mock-kpi-l">Dépenses engagées</div>
+              <div class="mock-kpi-v">780 k€</div>
+              <div class="mock-kpi-s">DRF réalisé</div>
+            </div>
+          </div>
+          <div class="mock-table-wrap">
+            <table class="mock-table">
+              <thead><tr><th>Chapitre</th><th>Libellé</th><th>Prévu</th><th>Réalisé</th><th>Taux</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td style="font-family:monospace;color:var(--bleu-med)">011</td>
+                  <td>Charges à caractère général</td>
+                  <td>245 k€</td><td>198 k€</td>
+                  <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:81%;background:var(--bleu-med)"></div></div>81 %</div></td>
+                </tr>
+                <tr>
+                  <td style="font-family:monospace;color:var(--bleu-med)">012</td>
+                  <td>Charges de personnel</td>
+                  <td>610 k€</td><td>582 k€</td>
+                  <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:95%;background:var(--orange)"></div></div><span style="color:var(--orange)">95 %</span></div></td>
+                </tr>
+                <tr>
+                  <td style="font-family:monospace;color:var(--bleu-med)">73</td>
+                  <td>Fiscalité locale</td>
+                  <td>820 k€</td><td>820 k€</td>
+                  <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:var(--vert)"></div></div><span style="color:var(--vert)">100 %</span></div></td>
+                </tr>
+                <tr>
+                  <td style="font-family:monospace;color:var(--bleu-med)">74</td>
+                  <td>Dotations et participations</td>
+                  <td>380 k€</td><td>269 k€</td>
+                  <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:71%;background:var(--bleu-med)"></div></div>71 %</div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-chart-t">Évolution N-5 — Dépenses vs Recettes de fonctionnement (k€)</div>
+            <div class="chart-bars">
+              <div class="bar-grp"><div class="bar-c" style="height:42px;background:#1a3a5c"></div><div class="bar-c" style="height:48px;background:#93c5fd"></div></div>
+              <div class="bar-grp"><div class="bar-c" style="height:50px;background:#1a3a5c"></div><div class="bar-c" style="height:56px;background:#93c5fd"></div></div>
+              <div class="bar-grp"><div class="bar-c" style="height:54px;background:#1a3a5c"></div><div class="bar-c" style="height:62px;background:#93c5fd"></div></div>
+              <div class="bar-grp"><div class="bar-c" style="height:59px;background:#1a3a5c"></div><div class="bar-c" style="height:66px;background:#93c5fd"></div></div>
+              <div class="bar-grp"><div class="bar-c" style="height:63px;background:#1a3a5c"></div><div class="bar-c" style="height:71px;background:#93c5fd"></div></div>
+              <div class="bar-grp"><div class="bar-c" style="height:68px;background:#1a3a5c"></div><div class="bar-c" style="height:76px;background:#93c5fd"></div></div>
+            </div>
+            <div class="chart-years">
+              <div class="chart-year">N-5</div><div class="chart-year">N-4</div><div class="chart-year">N-3</div>
+              <div class="chart-year">N-2</div><div class="chart-year">N-1</div>
+              <div class="chart-year" style="color:var(--bleu-med);font-weight:700">N</div>
+            </div>
+            <div class="chart-legend">
+              <div style="display:flex;align-items:center;gap:4px"><div class="leg-dot" style="background:#1a3a5c"></div><span class="leg-l">Dépenses réelles</span></div>
+              <div style="display:flex;align-items:center;gap:4px"><div class="leg-dot" style="background:#93c5fd"></div><span class="leg-l">Recettes réelles</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--gris-doux);text-align:center;margin-top:8px;font-style:italic">
+      Interface réelle de PPEI-Budget&amp;Finances — vos données remplacent les exemples à l'import
+    </p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:24px">
+      <div style="background:var(--blanc);border:1px solid var(--gris-bord);border-radius:var(--radius);padding:16px">
+        <div style="font-size:20px;color:var(--bleu-med);margin-bottom:8px"><i class="ti ti-clock"></i></div>
+        <div style="font-size:13px;font-weight:700;color:var(--bleu);margin-bottom:4px">Démarrage en 4 étapes</div>
+        <div style="font-size:12px;color:var(--gris-doux);line-height:1.5">Installer l'exe → exporter vos CSV → charger → explorer. Moins de 5 minutes.</div>
+      </div>
+      <div style="background:var(--blanc);border:1px solid var(--gris-bord);border-radius:var(--radius);padding:16px">
+        <div style="font-size:20px;color:var(--vert);margin-bottom:8px"><i class="ti ti-refresh"></i></div>
+        <div style="font-size:13px;font-weight:700;color:var(--bleu);margin-bottom:4px">Mise à jour instantanée</div>
+        <div style="font-size:12px;color:var(--gris-doux);line-height:1.5">Rechargez vos CSV à tout moment — le tableau se met à jour en quelques secondes.</div>
+      </div>
+      <div style="background:var(--blanc);border:1px solid var(--gris-bord);border-radius:var(--radius);padding:16px">
+        <div style="font-size:20px;color:var(--orange);margin-bottom:8px"><i class="ti ti-cpu"></i></div>
+        <div style="font-size:13px;font-weight:700;color:var(--bleu);margin-bottom:4px">Sans Python requis</div>
+        <div style="font-size:12px;color:var(--gris-doux);line-height:1.5">Installeur Windows autonome — aucune dépendance à installer manuellement.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — CONTACT
+  ══════════════════════════════════════ -->
+  <section id="contact">
+    <p class="section-eyebrow">Obtenir l'application</p>
+    <h2 class="section-title">Demandez PPEI-Budget&amp;Finances<br>pour votre commune</h2>
+    <p class="section-sub">L'application est distribuée gratuitement. Remplissez ce formulaire et vous recevrez le lien de téléchargement et la documentation.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>PPEI-Budget&amp;Finances est un projet personnel porté par un élu local d'Occitanie, à destination des collectivités territoriales qui n'ont pas les moyens de s'équiper en logiciels coûteux.</p>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="ti ti-user"></i></div>
+          <div class="contact-item-text">
+            <strong>Philippe PETIT</strong>
+            Auteur &amp; développeur — PPEI
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="ti ti-map-pin"></i></div>
+          <div class="contact-item-text">
+            <strong>Cépet, Occitanie</strong>
+            Commune de l'arrondissement de Toulouse
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="ti ti-device-desktop"></i></div>
+          <div class="contact-item-text">
+            <strong>Compatible Windows 10 / 11</strong>
+            Installeur .exe — aucun droit administrateur requis
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="ti ti-certificate"></i></div>
+          <div class="contact-item-text">
+            <strong>Norme M57 validée</strong>
+            Calculs vérifiés sur données réelles — millésime 2025–2026
+          </div>
+        </div>
+
+        <div style="background:var(--bleu-pale);border:1px solid var(--bleu-clair);border-radius:var(--radius);padding:14px 16px;font-size:13px;color:#1e40af;margin-top:8px">
+          <strong style="display:block;margin-bottom:4px">Fichiers à préparer :</strong>
+          Exportez depuis votre logiciel financier (Hélios, Civil Finances, Magnus…) :<br>
+          1. La <strong>situation comptable</strong> par chapitre (CSV)<br>
+          2. Le <strong>Grand Livre détaillé</strong> par article (CSV)
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label class="form-label" for="nom">Nom et prénom</label>
+            <input class="form-input" type="text" id="nom" placeholder="Marie Dupont">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="commune">Commune / Collectivité</label>
+            <input class="form-input" type="text" id="commune" placeholder="Mairie de Saint-Sulpice">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="role">Fonction</label>
+            <select class="form-select" id="role">
+              <option value="">Sélectionner…</option>
+              <option>Maire / Adjoint</option>
+              <option>Secrétaire de mairie</option>
+              <option>Responsable financier</option>
+              <option>DST / DGS</option>
+              <option>Autre élu</option>
+              <option>Autre technicien</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Adresse e-mail</label>
+            <input class="form-input" type="email" id="email" placeholder="marie.dupont@mairie-xxx.fr">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Message (facultatif)</label>
+            <textarea class="form-textarea" id="message" placeholder="Taille de la commune, logiciel financier utilisé, questions éventuelles…"></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm()">
+            <i class="ti ti-send"></i>
+            Envoyer la demande
+          </button>
+          <p class="form-note">Aucune donnée commerciale. Réponse sous 48 h.</p>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <i class="ti ti-circle-check" style="font-size:28px;color:var(--vert);display:block;margin-bottom:8px"></i>
+          <strong>Demande envoyée !</strong><br>
+          Vous recevrez le lien de téléchargement et la documentation sous 48 h.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page -->
+
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div>
+    <strong>PPEI — Plateforme Publique d'Échanges et d'Informations</strong><br>
+    v2.1.0 · Norme M57 · Python / Streamlit · Logiciel libre et gratuit
+  </div>
+  <div style="text-align:right">
+    Auteur : Philippe PETIT — Cépet, Occitanie<br>
+    Données : Situation M57 + Grand Livre
+  </div>
+</footer>
+
+
+<script>
+  function fmt(v) {
+    return v >= 1000
+      ? (v / 1000).toFixed(1).replace('.', ',') + ' M€'
+      : Math.round(v) + ' k€';
+  }
+  function pct(v) { return v.toFixed(1).replace('.', ',') + ' %'; }
+
+  function updateSim() {
+    const r73  = +document.getElementById('s73').value;
+    const r74  = +document.getElementById('s74').value;
+    const r70  = +document.getElementById('s70').value;
+    const d012 = +document.getElementById('s012').value;
+    const d011 = +document.getElementById('s011').value;
+    const d16  = +document.getElementById('s16').value;
+
+    document.getElementById('v73').textContent  = r73  + ' k€';
+    document.getElementById('v74').textContent  = r74  + ' k€';
+    document.getElementById('v70').textContent  = r70  + ' k€';
+    document.getElementById('v012').textContent = d012 + ' k€';
+    document.getElementById('v011').textContent = d011 + ' k€';
+    document.getElementById('v16').textContent  = d16  + ' k€';
+
+    const RRF = r73 + r74 + r70;
+    const DRF = d012 + d011;
+    const EB  = RRF - DRF;
+    const EN  = EB - d16;
+
+    document.getElementById('rrf').textContent = fmt(RRF);
+    document.getElementById('drf').textContent = fmt(DRF);
+
+    const ebEl = document.getElementById('eb');
+    ebEl.textContent = fmt(EB);
+    ebEl.className = 'sim-cascade-val ' + (EB > 0 ? 'col-green' : 'col-red');
+
+    const enEl = document.getElementById('en');
+    enEl.textContent = fmt(EN);
+    enEl.className = 'sim-cascade-val ' + (EN > 0 ? 'col-green' : 'col-red');
+
+    const tEB   = RRF > 0 ? (EB / RRF * 100) : 0;
+    const tPers = DRF > 0 ? (d012 / DRF * 100) : 0;
+    const tAut  = RRF > 0 ? ((r73 + r70) / RRF * 100) : 0;
+    const tDet  = EB  > 0 ? (d16  / EB) : 99;
+
+    const tebEl = document.getElementById('teb');
+    tebEl.textContent = pct(tEB);
+    tebEl.className = 'sim-result-val ' + (tEB >= 15 ? 'col-green' : tEB >= 8 ? 'col-orange' : 'col-red');
+    const tebSt = document.getElementById('teb-st');
+    tebSt.textContent = tEB >= 15 ? 'Sain (seuil > 15 %)' : tEB >= 8 ? 'Vigilance (seuil > 15 %)' : 'Alerte — insuffisant';
+    tebSt.style.color = tEB >= 15 ? 'var(--vert)' : tEB >= 8 ? 'var(--orange)' : 'var(--rouge)';
+
+    const tpEl = document.getElementById('tpers');
+    tpEl.textContent = pct(tPers);
+    tpEl.className = 'sim-result-val ' + (tPers <= 50 ? 'col-green' : tPers <= 60 ? 'col-orange' : 'col-red');
+    const tpSt = document.getElementById('tpers-st');
+    tpSt.textContent = tPers <= 50 ? 'Normal (seuil < 50 %)' : tPers <= 60 ? 'Vigilance' : 'Alerte — trop élevé';
+    tpSt.style.color = tPers <= 50 ? 'var(--vert)' : tPers <= 60 ? 'var(--orange)' : 'var(--rouge)';
+
+    const taEl = document.getElementById('taut');
+    taEl.textContent = pct(tAut);
+    taEl.className = 'sim-result-val ' + (tAut >= 60 ? 'col-green' : tAut >= 40 ? 'col-orange' : 'col-red');
+    const taSt = document.getElementById('taut-st');
+    taSt.textContent = tAut >= 60 ? 'Bonne autonomie (> 60 %)' : tAut >= 40 ? 'Autonomie partielle' : 'Dépendance élevée';
+    taSt.style.color = tAut >= 60 ? 'var(--vert)' : tAut >= 40 ? 'var(--orange)' : 'var(--rouge)';
+
+    const tdEl = document.getElementById('tdet');
+    const detFmt = EB > 0 ? tDet.toFixed(1).replace('.', ',') + ' ans' : 'N/A';
+    tdEl.textContent = detFmt;
+    tdEl.className = 'sim-result-val ' + (EB <= 0 ? 'col-red' : tDet <= 8 ? 'col-green' : tDet <= 12 ? 'col-orange' : 'col-red');
+    const tdSt = document.getElementById('tdet-st');
+    tdSt.textContent = EB <= 0 ? 'Épargne négative !' : tDet <= 8 ? 'Sain (< 8 ans)' : tDet <= 12 ? 'Vigilance (8–12 ans)' : 'Alerte (> 12 ans)';
+    tdSt.style.color = EB <= 0 ? 'var(--rouge)' : tDet <= 8 ? 'var(--vert)' : tDet <= 12 ? 'var(--orange)' : 'var(--rouge)';
+  }
+
+  ['s73','s74','s70','s012','s011','s16'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateSim);
+  });
+  updateSim();
+
+  function submitForm() {
+    const nom     = document.getElementById('nom').value.trim();
+    const commune = document.getElementById('commune').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    if (!nom || !commune || !email) {
+      alert('Merci de renseigner au minimum votre nom, votre commune et votre e-mail.');
+      return;
+    }
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>

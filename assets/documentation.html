@@ -1,0 +1,1170 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation — PPEI-Budget&Finances v2.1.0</title>
+<style>
+  /* ── Reset & base ─────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bleu-fonce:  #1a3a5c;
+    --bleu-moyen:  #2563a8;
+    --bleu-clair:  #dbeafe;
+    --bleu-pale:   #eff6ff;
+    --gris-bg:     #f8fafc;
+    --gris-bord:   #e2e8f0;
+    --gris-texte:  #374151;
+    --gris-doux:   #64748b;
+    --vert:        #16a34a;
+    --orange:      #ea580c;
+    --rouge:       #dc2626;
+    --blanc:       #ffffff;
+    --sidebar-w:   270px;
+    --font-sans:   'Segoe UI', system-ui, sans-serif;
+    --font-mono:   'Consolas', 'Courier New', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--gris-texte);
+    background: var(--gris-bg);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ──────────────────────────────────────────── */
+  nav#sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bleu-fonce);
+    color: #e0eaf8;
+    padding: 0 0 40px;
+    z-index: 100;
+  }
+  .nav-logo {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav-logo h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .nav-logo span {
+    font-size: 0.72rem;
+    color: #93b4d8;
+    display: block;
+    margin-top: 4px;
+  }
+  nav#sidebar ul { list-style: none; padding: 12px 0; }
+  nav#sidebar ul li a {
+    display: block;
+    padding: 7px 20px;
+    color: #b8d0ef;
+    text-decoration: none;
+    font-size: 0.83rem;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  nav#sidebar ul li a:hover,
+  nav#sidebar ul li a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.07);
+    border-left-color: #60a5fa;
+  }
+  .nav-section-title {
+    padding: 16px 20px 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #5a82ac;
+  }
+  nav#sidebar::-webkit-scrollbar { width: 4px; }
+  nav#sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+  /* ── Main ─────────────────────────────────────────────── */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0 48px 80px;
+    max-width: 960px;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, var(--bleu-moyen) 100%);
+    color: #fff;
+    padding: 52px 48px 40px;
+    margin: 0 -48px 48px;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 1rem;
+    color: #bfdbfe;
+    max-width: 580px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    margin-top: 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-meta span {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
+    color: #dbeafe;
+  }
+
+  /* ── Sections ─────────────────────────────────────────── */
+  section { margin-bottom: 56px; }
+  h2.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--bleu-fonce);
+    border-bottom: 2px solid var(--bleu-clair);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h3.sub-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--bleu-moyen);
+    margin: 24px 0 10px;
+  }
+  h4.sub-sub {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gris-doux);
+    margin: 18px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  p, li { line-height: 1.7; margin-bottom: 6px; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+
+  /* ── Tableaux ─────────────────────────────────────────── */
+  .table-wrap { overflow-x: auto; margin: 14px 0 24px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+  }
+  thead tr { background: var(--bleu-fonce); color: #fff; }
+  thead th {
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: var(--bleu-pale); }
+  tbody tr:hover { background: var(--bleu-clair); }
+  tbody td { padding: 8px 12px; border-bottom: 1px solid var(--gris-bord); vertical-align: top; }
+  td.champ { font-family: var(--font-mono); font-size: 0.8rem; color: var(--bleu-moyen); white-space: nowrap; }
+  td.type  { font-family: var(--font-mono); font-size: 0.78rem; color: var(--orange); }
+  td.ex    { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gris-doux); }
+
+  /* ── Badges / chips ───────────────────────────────────── */
+  .badge {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.73rem;
+    font-weight: 600;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .badge-blue   { background: var(--bleu-clair);  color: var(--bleu-fonce); }
+  .badge-green  { background: #dcfce7; color: #166534; }
+  .badge-orange { background: #ffedd5; color: #9a3412; }
+  .badge-gray   { background: #f1f5f9; color: #475569; }
+
+  /* ── Alertes / notes ──────────────────────────────────── */
+  .note {
+    border-left: 4px solid var(--bleu-moyen);
+    background: var(--bleu-pale);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 14px 0;
+    font-size: 0.85rem;
+  }
+  .note.warning { border-left-color: var(--orange); background: #fff7ed; }
+  .note.tip     { border-left-color: var(--vert);   background: #f0fdf4; }
+  .note strong  { color: var(--bleu-fonce); }
+
+  /* ── Code ─────────────────────────────────────────────── */
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--bleu-moyen);
+  }
+  pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+
+  /* ── Arbo fichiers ────────────────────────────────────── */
+  .filetree {
+    background: #1e293b;
+    color: #94a3b8;
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.9;
+  }
+  .filetree .dir  { color: #60a5fa; font-weight: 600; }
+  .filetree .file { color: #e2e8f0; }
+  .filetree .desc { color: #475569; }
+
+  /* ── Onglets docs ─────────────────────────────────────── */
+  .onglet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .onglet-card {
+    background: var(--blanc);
+    border: 1px solid var(--gris-bord);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-top: 3px solid var(--bleu-moyen);
+  }
+  .onglet-card .icon { font-size: 1.3rem; margin-bottom: 6px; }
+  .onglet-card h4 { font-size: 0.85rem; color: var(--bleu-fonce); margin-bottom: 4px; }
+  .onglet-card p  { font-size: 0.78rem; color: var(--gris-doux); }
+
+  /* ── Ratio table ──────────────────────────────────────── */
+  .ratio-group { margin-bottom: 32px; }
+  .ratio-group-title {
+    background: var(--bleu-fonce);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px 6px 0 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .ratio-group table { margin: 0; }
+  .ratio-group table thead tr { background: var(--bleu-moyen); }
+
+  /* ── Footer ───────────────────────────────────────────── */
+  footer {
+    margin-left: var(--sidebar-w);
+    padding: 20px 48px;
+    border-top: 1px solid var(--gris-bord);
+    font-size: 0.78rem;
+    color: var(--gris-doux);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ SIDEBAR ══════════════════ -->
+<nav id="sidebar">
+  <div class="nav-logo">
+    <h2>💰 PPEI — Budget &amp; Finances</h2>
+    <span>Documentation technique v2.1.0</span>
+  </div>
+  <ul>
+    <li><p class="nav-section-title">Présentation</p></li>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#archi">Architecture</a></li>
+    <li><a href="#demarrage">Démarrage rapide</a></li>
+
+    <li><p class="nav-section-title">Données sources</p></li>
+    <li><a href="#fichiers">Fichiers CSV requis</a></li>
+    <li><a href="#champs-situation">Champs — Situation</a></li>
+    <li><a href="#champs-gl">Champs — Grand Livre</a></li>
+    <li><a href="#encodage">Encodage &amp; séparateur</a></li>
+
+    <li><p class="nav-section-title">Onglets</p></li>
+    <li><a href="#onglet-overview">Vue d'ensemble</a></li>
+    <li><a href="#onglet-fonc">Fonctionnement</a></li>
+    <li><a href="#onglet-inv">Investissement</a></li>
+    <li><a href="#onglet-evol">Évolution N‑5</a></li>
+    <li><a href="#onglet-gl">Grand Livre</a></li>
+    <li><a href="#onglet-brut">Tableau brut</a></li>
+    <li><a href="#onglet-analyse">Analyse résultat</a></li>
+    <li><a href="#onglet-ratios">Ratios M57</a></li>
+    <li><a href="#onglet-saisie">Saisie complémentaire</a></li>
+
+    <li><p class="nav-section-title">Calculs M57</p></li>
+    <li><a href="#calculs-autofinancement">Auto-financement</a></li>
+    <li><a href="#calculs-ratios">Ratios — formules</a></li>
+
+    <li><p class="nav-section-title">Export &amp; compilation</p></li>
+    <li><a href="#export-pdf">Export PDF</a></li>
+    <li><a href="#compilation">PyInstaller</a></li>
+    <li><a href="#inno">Inno Setup 6</a></li>
+    <li><a href="#versions">Historique versions</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main>
+
+  <!-- Hero -->
+  <div class="hero">
+    <p class="hero-eyebrow">PPEI — Plateforme Publique d'Échanges et d'Informations</p>
+    <h1>💰 PPEI — Budget &amp; Finances</h1>
+    <p>Tableau de bord budgétaire et comptable M57 pour collectivités territoriales.<br>
+       Analyse de la situation comptable et du Grand Livre, ratios financiers, auto-financement, export PDF.</p>
+    <div class="hero-meta">
+      <span>Version 2.1.0</span>
+      <span>Millésime 2025–2026</span>
+      <span>Auteur : Philippe PETIT</span>
+      <span>Norme M57</span>
+    </div>
+  </div>
+
+  <!-- ── INTRODUCTION ──────────────────────────────── -->
+  <section id="intro">
+    <h2 class="section-title">📘 Introduction</h2>
+    <p>
+      <strong>PPEI-Budget&Finances</strong> est une application Windows standalone permettant aux élus,
+      agents et responsables financiers de collectivités territoriales d'analyser leur situation budgétaire
+      et comptable à partir des exports CSV issus de leur logiciel de gestion financière (norme M57).
+    </p>
+    <p>Elle exploite deux fichiers sources :</p>
+    <ul>
+      <li>La <strong>situation comptable</strong> (synthèse par chapitre avec historique N‑1 à N‑5)</li>
+      <li>Le <strong>Grand Livre détaillé</strong> par article (écritures individuelles)</li>
+    </ul>
+    <div class="note tip">
+      <strong>💡 Aucune installation de Python requise.</strong> L'application est distribuée sous forme
+      d'un installeur Windows (<code>.exe</code>) généré par PyInstaller + Inno Setup 6.
+    </div>
+  </section>
+
+  <!-- ── ARCHITECTURE ───────────────────────────────── -->
+  <section id="archi">
+    <h2 class="section-title">🏗️ Architecture du projet</h2>
+    <div class="filetree">
+      <div><span class="dir">ppei_budget/</span></div>
+      <div>&nbsp;&nbsp;├── <span class="file">app.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Application principale Streamlit (8 onglets)</span></div>
+      <div>&nbsp;&nbsp;├── <span class="file">run_app.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Lanceur PyInstaller (port 8501, freeze_support)</span></div>
+      <div>&nbsp;&nbsp;├── <span class="file">requirements.txt</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Dépendances pip</span></div>
+      <div>&nbsp;&nbsp;├── <span class="file">ppei_budget.spec</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Spec PyInstaller</span></div>
+      <div>&nbsp;&nbsp;├── <span class="file">ppei_budget_setup.iss</span> &nbsp;&nbsp;<span class="desc"># Script Inno Setup 6</span></div>
+      <div>&nbsp;&nbsp;├── <span class="dir">core/</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">data_loader.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Détection encodage/séparateur, chargement CSV</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">calculs.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Calculs autofinancement M57 (N et N‑1 à N‑5)</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">ratios.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Calcul des 40+ ratios M57</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">calculs.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Cascade auto-financement M57 (N + historique N-5)</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">ratios.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># 40+ ratios M57 (auto-calculés + saisie)</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">saisie.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Persistance session_state — données complémentaires</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">pdf_builder.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Export PDF ReportLab (5 sections)</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="file">utils.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># CSS, formatage, sidebar, constantes</span></div>
+      <div>&nbsp;&nbsp;├── <span class="dir">ui/</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_overview.py</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Vue d'ensemble</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_section.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Fonctionnement / Investissement (générique)</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_evolution.py</span> &nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Évolution N‑5</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_grand_livre.py</span> &nbsp;<span class="desc"># Onglet Grand Livre</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_brut.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Tableau brut + export CSV/Excel</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_analyse.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Analyse résultat &amp; auto-financement</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">tab_ratios.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Ratios M57 (4 sous-tabs)</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="file">tab_saisie.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># Onglet Saisie complémentaire (bilan, fiscalité, dette)</span></div>
+      <div>&nbsp;&nbsp;└── <span class="dir">assets/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc"># logo.png, icônes</span></div>
+    </div>
+  </section>
+
+  <!-- ── DÉMARRAGE ──────────────────────────────────── -->
+  <section id="demarrage">
+    <h2 class="section-title">🚀 Démarrage rapide</h2>
+
+    <h3 class="sub-title">En mode développement</h3>
+    <pre><code>pip install -r requirements.txt
+streamlit run app.py</code></pre>
+
+    <h3 class="sub-title">Via l'exécutable Windows</h3>
+    <ol>
+      <li>Lancer <code>PPEI-BudgetFinances.exe</code></li>
+      <li>Le navigateur s'ouvre automatiquement sur <code>http://localhost:8501</code> (délai ~8 s)</li>
+      <li>Renseigner les chemins des fichiers CSV dans la sidebar, ou les importer via le bouton d'upload</li>
+      <li>Sélectionner le budget souhaité dans le filtre principal</li>
+    </ol>
+
+    <h3 class="sub-title">Chargement des données</h3>
+    <p>Deux méthodes sont disponibles :</p>
+    <ul>
+      <li><strong>Chemin direct</strong> : saisir le chemin complet du fichier CSV dans le champ texte de la sidebar</li>
+      <li><strong>Import</strong> : utiliser le bouton <em>"Ou importer les fichiers"</em> dans la sidebar pour téléverser directement depuis l'explorateur Windows</li>
+    </ul>
+    <div class="note">
+      L'application détecte automatiquement l'encodage (UTF-8, UTF-8 BOM, Latin-1…) et le séparateur de champs (<code>;</code>, <code>,</code>, <code>\t</code>, <code>|</code>).
+      Aucune configuration manuelle n'est nécessaire.
+    </div>
+  </section>
+
+  <!-- ── FICHIERS CSV ───────────────────────────────── -->
+  <section id="fichiers">
+    <h2 class="section-title">📂 Fichiers CSV requis</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fichier</th><th>Description</th><th>Encodage détecté</th><th>Séparateur</th><th>Volume typique</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="champ">Situation_new.CSV</td>
+            <td>Situation comptable par chapitre — synthèse avec historique N‑1 à N‑5</td>
+            <td><span class="badge badge-blue">UTF-8 BOM</span></td>
+            <td><code>;</code></td>
+            <td>~300 lignes</td>
+          </tr>
+          <tr>
+            <td class="champ">Grand_livre_détail_par_article.CSV</td>
+            <td>Grand Livre — écritures individuelles (prévisions + liquidations)</td>
+            <td><span class="badge badge-blue">UTF-8</span></td>
+            <td><code>;</code></td>
+            <td>~5 000 lignes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note warning">
+      <strong>⚠️ Attention :</strong> Les deux fichiers doivent provenir du même exercice budgétaire.
+      L'application filtre sur <code>Libellé_budget</code> pour isoler chaque budget (Communal, CCAS, Lotissement…).
+    </div>
+  </section>
+
+  <!-- ── CHAMPS SITUATION ───────────────────────────── -->
+  <section id="champs-situation">
+    <h2 class="section-title">📋 Champs — Situation comptable</h2>
+    <p>Ce fichier contient une ligne par couple <strong>compte × sens × budget</strong>, avec les montants de l'exercice courant et des 5 exercices précédents.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Champ</th><th>Type</th><th>Valeurs / Exemple</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="champ">Sens</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">D, R</td>
+            <td><strong>D</strong> = Dépense, <strong>R</strong> = Recette</td>
+          </tr>
+          <tr>
+            <td class="champ">Section</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">F, I</td>
+            <td><strong>F</strong> = Fonctionnement, <strong>I</strong> = Investissement</td>
+          </tr>
+          <tr>
+            <td class="champ">Chapitre</td>
+            <td class="type">Texte</td>
+            <td class="ex">011 - Charges à caractère général</td>
+            <td>Code chapitre M57 suivi de son libellé. Le code est extrait via le séparateur <code>-</code> (ex. <code>011</code>).</td>
+          </tr>
+          <tr>
+            <td class="champ">Libellé_budget</td>
+            <td class="type">Texte</td>
+            <td class="ex">BUDGET COMMUNAL, BUDGET CCAS, BUDGET ANNEXE LOTISSEMENT</td>
+            <td>Identifiant du budget. Sert de filtre principal dans toute l'application.</td>
+          </tr>
+          <tr>
+            <td class="champ">Compte</td>
+            <td class="type">Texte</td>
+            <td class="ex">13911 - Subv. inv. actifs amort.</td>
+            <td>Article budgétaire détaillé (sous-niveau du chapitre).</td>
+          </tr>
+          <tr>
+            <td class="champ">Total_Prévu</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">76374,14</td>
+            <td>Montant total prévu au budget primitif + décisions modificatives. Format FR (virgule décimale).</td>
+          </tr>
+          <tr>
+            <td class="champ">Réalisé</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">76374,14</td>
+            <td>Montant réalisé cumulé à la date d'export (liquidations + mandatements).</td>
+          </tr>
+          <tr>
+            <td class="champ">__Réalisé_</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">99,99</td>
+            <td>Taux de réalisation en % (Réalisé / Total_Prévu × 100).</td>
+          </tr>
+          <tr>
+            <td class="champ">Disponible__réalisé_</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">61,87</td>
+            <td>Montant disponible après réalisation (Total_Prévu − Réalisé).</td>
+          </tr>
+          <tr>
+            <td class="champ">__Dispo__réalisé_</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">0,01</td>
+            <td>Taux disponible en % (Disponible / Total_Prévu × 100).</td>
+          </tr>
+          <tr>
+            <td class="champ">Liquidé_N_1</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">4156,86</td>
+            <td>Montant liquidé lors de l'exercice N‑1 (exercice précédent).</td>
+          </tr>
+          <tr>
+            <td class="champ">Liquidé_N_2</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">8843,44</td>
+            <td>Montant liquidé lors de l'exercice N‑2.</td>
+          </tr>
+          <tr>
+            <td class="champ">Liquidé_N_3</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">10250,22</td>
+            <td>Montant liquidé lors de l'exercice N‑3.</td>
+          </tr>
+          <tr>
+            <td class="champ">Liquidé_N_4</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">14899,04</td>
+            <td>Montant liquidé lors de l'exercice N‑4.</td>
+          </tr>
+          <tr>
+            <td class="champ">Liquidé_N_5</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">16362,44</td>
+            <td>Montant liquidé lors de l'exercice N‑5 (le plus ancien).</td>
+          </tr>
+          <tr>
+            <td class="champ">Dégagé</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">20455,50</td>
+            <td>Montant dégagé (annulation d'engagement).</td>
+          </tr>
+          <tr>
+            <td class="champ">Engagé</td>
+            <td class="type">Numérique FR</td>
+            <td class="ex">20455,50</td>
+            <td>Montant total engagé sur le compte (engagements juridiques).</td>
+          </tr>
+          <tr>
+            <td class="champ">Reste_engagé</td>
+            <td class="type">Numérique</td>
+            <td class="ex">0</td>
+            <td>Reste à mandater sur les engagements en cours (Engagé − Liquidé).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Traitement des montants :</strong> Les colonnes numériques utilisent la convention française
+      (virgule comme séparateur décimal, espace comme séparateur de milliers). Le module
+      <code>core/data_loader.py</code> effectue automatiquement la conversion en <code>float</code> Python.
+    </div>
+  </section>
+
+  <!-- ── CHAMPS GRAND LIVRE ─────────────────────────── -->
+  <section id="champs-gl">
+    <h2 class="section-title">📒 Champs — Grand Livre</h2>
+    <p>Ce fichier contient une ligne par écriture comptable individuelle (prévision ou liquidation),
+       avec le détail des montants HT, TVA et TTC.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Champ</th><th>Type</th><th>Valeurs / Exemple</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="champ">Sens</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">D, R</td>
+            <td><strong>D</strong> = Dépense, <strong>R</strong> = Recette. Les lignes sans sens (totaux intermédiaires) sont filtrées automatiquement.</td>
+          </tr>
+          <tr>
+            <td class="champ">Compte</td>
+            <td class="type">Texte</td>
+            <td class="ex">13911 - Subv. inv. actifs amort.</td>
+            <td>Article budgétaire complet avec libellé.</td>
+          </tr>
+          <tr>
+            <td class="champ">Exercice</td>
+            <td class="type">Entier</td>
+            <td class="ex">2025</td>
+            <td>Année de l'exercice budgétaire.</td>
+          </tr>
+          <tr>
+            <td class="champ">Libellé_budget</td>
+            <td class="type">Texte</td>
+            <td class="ex">BUDGET COMMUNAL</td>
+            <td>Identifiant du budget. Filtre principal de l'application.</td>
+          </tr>
+          <tr>
+            <td class="champ">Date</td>
+            <td class="type">Date</td>
+            <td class="ex">10/04/2025</td>
+            <td>Date de l'écriture comptable (format JJ/MM/AAAA). Convertie en <code>datetime</code> à l'import.</td>
+          </tr>
+          <tr>
+            <td class="champ">type</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">Prévision, Liquidation</td>
+            <td><strong>Prévision</strong> = ligne budgétaire (BP, DM…) ; <strong>Liquidation</strong> = écriture réelle mandatée ou titrée.</td>
+          </tr>
+          <tr>
+            <td class="champ">Objet</td>
+            <td class="type">Texte</td>
+            <td class="ex">BP - BUDGET PRIMITIF 2025</td>
+            <td>Libellé de l'opération ou de la pièce justificative.</td>
+          </tr>
+          <tr>
+            <td class="champ">Série_de_bordereau</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">M+ - Mandats ordinaires, T+ - Titres ordinaires, M- - Mandats annulatifs, T- - Titres annulatifs</td>
+            <td>Série comptable du bordereau : M = mandat (dépense), T = titre (recette). Le signe indique si l'écriture est normale (+) ou annulative (−).</td>
+          </tr>
+          <tr>
+            <td class="champ">N_Bordereau</td>
+            <td class="type">Entier</td>
+            <td class="ex">103</td>
+            <td>Numéro séquentiel du bordereau de mandats ou de titres.</td>
+          </tr>
+          <tr>
+            <td class="champ">N_Pièce</td>
+            <td class="type">Entier</td>
+            <td class="ex">570</td>
+            <td>Numéro de la pièce comptable (mandat ou titre individuel).</td>
+          </tr>
+          <tr>
+            <td class="champ">N_Engagement</td>
+            <td class="type">Entier</td>
+            <td class="ex">42</td>
+            <td>Numéro de l'engagement juridique associé à la liquidation.</td>
+          </tr>
+          <tr>
+            <td class="champ">Section</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">F, I</td>
+            <td><strong>F</strong> = Fonctionnement, <strong>I</strong> = Investissement.</td>
+          </tr>
+          <tr>
+            <td class="champ">Chapitre</td>
+            <td class="type">Texte</td>
+            <td class="ex">16 - Emprunts et dettes assimilées</td>
+            <td>Chapitre M57 de rattachement de l'écriture.</td>
+          </tr>
+          <tr>
+            <td class="champ">Imputation</td>
+            <td class="type">Texte</td>
+            <td class="ex">001, 13911</td>
+            <td>Code compte d'imputation court (sans libellé). Utilisé pour les regroupements analytiques.</td>
+          </tr>
+          <tr>
+            <td class="champ">Tiers</td>
+            <td class="type">Texte</td>
+            <td class="ex">SGC GRENADE, CREDIT MUTUEL FRONTON</td>
+            <td>Nom du fournisseur, organisme ou créancier. Utilisé dans le Top tiers de l'onglet Grand Livre.</td>
+          </tr>
+          <tr>
+            <td class="champ">Total__R_V_</td>
+            <td class="type">Numérique</td>
+            <td class="ex">6897420,07</td>
+            <td>Montant total révisé/voté (budget primitif + modifications).</td>
+          </tr>
+          <tr>
+            <td class="champ">Engagé</td>
+            <td class="type">Numérique</td>
+            <td class="ex">0,00</td>
+            <td>Montant engagé sur cet article (engagement juridique en cours).</td>
+          </tr>
+          <tr>
+            <td class="champ">Dégagé</td>
+            <td class="type">Numérique</td>
+            <td class="ex">0,00</td>
+            <td>Montant dégagé (annulation d'engagement).</td>
+          </tr>
+          <tr>
+            <td class="champ">Liquidé</td>
+            <td class="type">Numérique</td>
+            <td class="ex">5350005,07</td>
+            <td>Montant liquidé (mandaté ou titré) sur cet article.</td>
+          </tr>
+          <tr>
+            <td class="champ">Montant_HT</td>
+            <td class="type">Numérique</td>
+            <td class="ex">5189374,31</td>
+            <td>Montant hors taxe de la pièce comptable.</td>
+          </tr>
+          <tr>
+            <td class="champ">Montant_TVA_récupérable</td>
+            <td class="type">Numérique</td>
+            <td class="ex">0,00</td>
+            <td>TVA récupérable le cas échéant (FCTVA ou assimilé).</td>
+          </tr>
+          <tr>
+            <td class="champ">Montant_TTC</td>
+            <td class="type">Numérique</td>
+            <td class="ex">5273630,93</td>
+            <td>Montant toutes taxes comprises. Utilisé pour les agrégats de l'onglet Grand Livre.</td>
+          </tr>
+          <tr>
+            <td class="champ">Réalisé</td>
+            <td class="type">Numérique</td>
+            <td class="ex">5350005,07</td>
+            <td>Montant réalisé consolidé sur la ligne (identique à Liquidé pour les liquidations).</td>
+          </tr>
+          <tr>
+            <td class="champ">Réel_Ordre</td>
+            <td class="type">Catégorie</td>
+            <td class="ex">Réel, Ordre</td>
+            <td><strong>Réel</strong> = écriture décaissable/encaissable ; <strong>Ordre</strong> = opération d'ordre non décaissable (amortissements, virements de section…).</td>
+          </tr>
+          <tr>
+            <td class="champ">Reste_engagé</td>
+            <td class="type">Numérique</td>
+            <td class="ex">0,00</td>
+            <td>Solde restant à liquider sur l'engagement (Engagé − Liquidé).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── ENCODAGE ───────────────────────────────────── -->
+  <section id="encodage">
+    <h2 class="section-title">🔤 Encodage &amp; séparateur — Détection automatique</h2>
+    <p>Le module <code>core/data_loader.py</code> effectue les détections suivantes à chaque chargement :</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Étape</th><th>Méthode</th><th>Résultat typique</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Encodage</td>
+            <td>Librairie <code>chardet</code> sur les 8 premiers Ko</td>
+            <td>Situation : <code>utf-8-sig</code> (BOM) — Grand Livre : <code>utf-8</code></td>
+          </tr>
+          <tr>
+            <td>Séparateur</td>
+            <td>Comptage des occurrences sur la 1re ligne (<code>; , \t |</code>)</td>
+            <td><code>;</code> (point-virgule) dans les deux fichiers</td>
+          </tr>
+          <tr>
+            <td>Nombres FR</td>
+            <td>Remplacement virgule → point, suppression espaces insécables</td>
+            <td>Conversion en <code>float64</code> pandas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note tip">
+      Si votre logiciel exporte dans un encodage différent (Latin-1, Windows-1252…), l'application le
+      détecte automatiquement et convertit à la volée. Aucune manipulation manuelle n'est nécessaire.
+    </div>
+  </section>
+
+  <!-- ── ONGLETS ────────────────────────────────────── -->
+  <section id="onglets">
+    <h2 class="section-title">🗂️ Vue d'ensemble des onglets</h2>
+    <div class="onglet-grid">
+      <div class="onglet-card"><div class="icon">📊</div><h4>Vue d'ensemble</h4><p>Métriques globales, jauges Prévu/Réalisé par section, graphiques comparatifs.</p></div>
+      <div class="onglet-card"><div class="icon">🏦</div><h4>Fonctionnement</h4><p>Détail section F par chapitre, taux de réalisation, détail par compte.</p></div>
+      <div class="onglet-card"><div class="icon">🔨</div><h4>Investissement</h4><p>Détail section I par chapitre, taux de réalisation, détail par compte.</p></div>
+      <div class="onglet-card"><div class="icon">📈</div><h4>Évolution N‑5</h4><p>Courbes et barres des liquidations N‑1 à N‑5, zoom par chapitre.</p></div>
+      <div class="onglet-card"><div class="icon">📒</div><h4>Grand Livre</h4><p>Écritures individuelles filtrables, Top tiers, répartition mensuelle.</p></div>
+      <div class="onglet-card"><div class="icon">🗄️</div><h4>Tableau brut</h4><p>Données brutes filtrables, export CSV et Excel.</p></div>
+      <div class="onglet-card"><div class="icon">💰</div><h4>Analyse résultat</h4><p>Badges auto-financement, évolution N‑5 → N de chaque indicateur.</p></div>
+      <div class="onglet-card"><div class="icon">📐</div><h4>Ratios M57</h4><p>40+ ratios financiers en 4 sous-tabs, paramètres démographiques.</p></div>
+      <div class="onglet-card"><div class="icon">📝</div><h4>Saisie complémentaire</h4><p>Données bilan, fiscalité et dette pour débloquer les ratios avancés.</p></div>
+    </div>
+  </section>
+
+  <!-- Onglets détaillés -->
+  <section id="onglet-overview">
+    <h2 class="section-title">📊 Onglet — Vue d'ensemble</h2>
+    <p>Présente une synthèse globale du budget sélectionné :</p>
+    <ul>
+      <li>4 métriques clés : Dépenses prévues, Dépenses réalisées (avec taux), Recettes prévues, Recettes réalisées</li>
+      <li>Par section F et I : jauges HTML de progression et graphique Prévu vs Réalisé groupé</li>
+      <li><strong>Deux tableaux côte à côte</strong> — Récapitulatif par chapitre Dépenses (titre bleu) et Recettes (titre vert), avec Section, Prévu, Réalisé, Engagé et Taux</li>
+    </ul>
+  </section>
+
+  <section id="onglet-fonc">
+    <h2 class="section-title">🏦 Onglet — Fonctionnement</h2>
+    <p>Analyse détaillée de la <strong>section Fonctionnement (F)</strong> :</p>
+    <ul>
+      <li>Sélecteur Dépenses / Recettes (radio button avec <code>key</code> unique)</li>
+      <li>4 KPIs : Total prévu, Total réalisé, Total engagé, Taux global</li>
+      <li>Graphique horizontal Prévu vs Réalisé par chapitre</li>
+      <li>Graphique taux de réalisation coloré (vert &gt; 60 %, orange &lt; 60 %, rouge &gt; 100 %)</li>
+      <li>Tableau détaillé avec colonne Disponible et Liquidé N‑1</li>
+      <li>Expander Détail par compte avec filtre chapitre</li>
+    </ul>
+  </section>
+
+  <section id="onglet-inv">
+    <h2 class="section-title">🔨 Onglet — Investissement</h2>
+    <p>Identique à l'onglet Fonctionnement, appliqué à la <strong>section Investissement (I)</strong>. Utilise le même module <code>ui/tab_section.py</code> avec <code>section_code="I"</code>.</p>
+  </section>
+
+  <section id="onglet-evol">
+    <h2 class="section-title">📈 Onglet — Évolution N‑5</h2>
+    <ul>
+      <li>Courbes F et I (Dépenses + Recettes) sur <strong>6 exercices</strong> : colonnes <code>Liquidé_N_5</code> à <code>Liquidé_N_1</code> + <code>Réalisé</code> (N courant)</li>
+      <li>Affichage chronologique <strong>N‑5 → N</strong> (gauche → droite) — l'exercice courant est toujours à droite</li>
+      <li>Barres semi-transparentes + courbe avec valeurs annotées</li>
+      <li>Tableaux récapitulatifs par section en expander</li>
+      <li>Zoom par chapitre : sélection chapitre + sens → graphique barres N‑5 → N</li>
+    </ul>
+  </section>
+
+  <section id="onglet-gl">
+    <h2 class="section-title">📒 Onglet — Grand Livre</h2>
+    <ul>
+      <li>4 filtres cumulables : type d'écriture (Prévision / Liquidation), Sens (D/R), <strong>Chapitre</strong>, recherche libre Tiers/Objet</li>
+      <li>4 KPIs sur les liquidations filtrées : Nb écritures, Montant TTC, Montant HT, TVA récupérable</li>
+      <li>Top 10 tiers par montant TTC (liquidations)</li>
+      <li><strong>Liquidations par mois</strong> — graphique recalculé dynamiquement selon le chapitre sélectionné, titre mis à jour automatiquement</li>
+      <li>Tooltip enrichi : montant TTC + nombre d'écritures par mois</li>
+      <li>Tableau complet des écritures (400 px, scroll) avec montants formatés</li>
+    </ul>
+  </section>
+
+  <section id="onglet-brut">
+    <h2 class="section-title">🗄️ Onglet — Tableau brut</h2>
+    <ul>
+      <li>Sélection source : Situation comptable ou Grand Livre</li>
+      <li>Filtres : Section, Sens, recherche textuelle globale (toutes colonnes)</li>
+      <li><strong>Vue par chapitre avec expanders</strong> (Situation uniquement) — chaque expander affiche le résumé Prévu / Réalisé / Taux dans l'en-tête et le détail des comptes en deux colonnes D / R à l'intérieur, avec colonnes N‑1 et N‑2 si disponibles</li>
+      <li>Vue Grand Livre : tableau classique scrollable</li>
+      <li>Export en <strong>CSV</strong> (UTF-8 BOM, séparateur <code>;</code>) ou <strong>Excel (.xlsx)</strong> via openpyxl</li>
+    </ul>
+  </section>
+
+  <section id="onglet-analyse">
+    <h2 class="section-title">💰 Onglet — Analyse résultat &amp; Auto-financement</h2>
+    <p>Restitue les indicateurs d'auto-financement M57 validés comptablement :</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Badge</th><th>Couleur</th><th>Formule</th></tr></thead>
+        <tbody>
+          <tr><td>Marge brute</td><td><span class="badge badge-green">Vert</span></td><td>Produits réels − Charges réelles</td></tr>
+          <tr><td>Épargne brute</td><td><span class="badge badge-green">Vert</span></td><td>Marge brute − Charges autres + Produits autres</td></tr>
+          <tr><td>Dont produits except.</td><td><span class="badge" style="background:#fee2e2;color:#991b1b;">Rouge</span></td><td>76 + 77</td></tr>
+          <tr><td>Épargne nette</td><td><span class="badge badge-green">Vert</span></td><td>Épargne brute − Remb. capital (chap. 16)</td></tr>
+          <tr><td>Report N‑1</td><td><span class="badge" style="background:#dbeafe;color:#1e40af;">Bleu</span></td><td>Chap. 002</td></tr>
+          <tr><td>Épargne disponible</td><td><span class="badge badge-green">Vert</span></td><td>Épargne nette + Report N‑1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note warning">
+      <strong>⚠️ Point technique :</strong> Le chapitre 16 (remboursement capital) est en section
+      <strong>Investissement</strong>. L'onglet Analyse résultat reçoit donc le DataFrame complet
+      <strong>toutes sections</strong> du budget, indépendamment du filtre section de la sidebar.
+    </div>
+    <p>Six graphiques barres + courbe (N‑5 → N) sont calculés en appliquant la même formule sur les colonnes
+       <code>Liquidé_N_1</code> à <code>Liquidé_N_5</code>.</p>
+  </section>
+
+  <section id="onglet-ratios">
+    <h2 class="section-title">📐 Onglet — Ratios M57</h2>
+    <p>Cet onglet est <strong>indépendant des filtres sidebar</strong>. Il dispose de ses propres paramètres :</p>
+    <ul>
+      <li><strong>Population</strong> : initialisée à 2 243 (INSEE RP2022, géographie au 01/01/2025)</li>
+      <li><strong>Nombre de ménages</strong> : initialisé à 875 (INSEE RP2022)</li>
+      <li><strong>Nombre d'emplois actifs</strong> : initialisé à 1 147 (INSEE RP2022)</li>
+      <li><strong>Sélection multi-budgets</strong> : permet de choisir un ou plusieurs budgets pour les ratios</li>
+    </ul>
+    <h3 class="sub-title">Organisation en 4 sous-tabs</h3>
+    <div class="onglet-grid">
+      <div class="onglet-card"><div class="icon">🧱</div><h4>Épargne &amp; Endettement</h4><p>Ratios 1.1 et 1.2 — épargne brute/nette, taux, capacité de désendettement.</p></div>
+      <div class="onglet-card"><div class="icon">🏗️</div><h4>Investissement &amp; Structure</h4><p>Ratios 1.3, 2.1, 3.2, 3.3 — taux d'investissement, rigidité, performance.</p></div>
+      <div class="onglet-card"><div class="icon">🧾</div><h4>Fiscalité &amp; Patrimoine</h4><p>Ratios 2.2, 2.3, 3.1 — pression fiscale, patrimoine et trésorerie (bilan requis).</p></div>
+      <div class="onglet-card"><div class="icon">🧍</div><h4>Par habitant, ménage &amp; emploi</h4><p>Ratios 4.1 à 4.7 — tous les indicateurs rapportés aux unités démographiques.</p></div>
+    </div>
+    <div class="note tip">
+      Les ratios patrimoniaux (2.3) et de trésorerie (3.1) sont désormais <strong>débloqués automatiquement</strong>
+      dès que les données correspondantes sont saisies dans l'onglet <em>📝 Saisie complémentaire</em>.
+      Les données disponibles dans la situation (immobilisations flux N, dotations 68, produit fiscal N‑1)
+      sont auto-calculées sans saisie manuelle.
+    </div>
+  </section>
+
+  <!-- ── SAISIE COMPLÉMENTAIRE ─────────────────────── -->
+  <section id="onglet-saisie">
+    <h2 class="section-title">📝 Onglet — Saisie complémentaire</h2>
+    <p>Cet onglet permet de renseigner les données complémentaires non disponibles dans les exports CSV,
+       afin de débloquer les ratios patrimoniaux, de trésorerie et fiscaux avancés.
+       Toutes les valeurs sont <strong>persistées en session</strong> (conservées pendant toute la session de travail).</p>
+
+    <h3 class="sub-title">Principe auto vs saisie manuelle</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Donnée</th><th>Source</th><th>Saisie requise ?</th></tr></thead>
+        <tbody>
+          <tr><td>Immobilisations flux N (20+21+23+204)</td><td>Situation comptable — section I/D</td><td><span class="badge badge-green">Auto</span></td></tr>
+          <tr><td>Subventions reçues (13)</td><td>Situation comptable — section I/R</td><td><span class="badge badge-green">Auto</span></td></tr>
+          <tr><td>Dotations amortissements N (68)</td><td>Situation comptable — section F/D</td><td><span class="badge badge-green">Auto</span></td></tr>
+          <tr><td>Produit fiscal N‑1</td><td>Liquidé_N_1 chapitres 73+731</td><td><span class="badge badge-green">Auto</span></td></tr>
+          <tr><td>Amortissements cumulés bilan (28)</td><td>Compte de gestion / bilan au 31/12</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+          <tr><td>Provisions (15)</td><td>Bilan au 31/12</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+          <tr><td>Fonds propres cumulés (10)</td><td>Bilan au 31/12</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+          <tr><td>Actifs circulants / Dettes CT (41+45 / 40+42+43)</td><td>Bilan au 31/12</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+          <tr><td>Encours réel de la dette</td><td>État de la dette au 31/12</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+          <tr><td>Emprunts nouveaux (1641)</td><td>État de la dette</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+          <tr><td>Bases fiscales TH / TF / TFNB / CFE</td><td>Notification DGFIP</td><td><span class="badge badge-orange">Manuel</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Ratios débloqués par la saisie</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Données saisies</th><th>Ratios débloqués</th></tr></thead>
+        <tbody>
+          <tr><td>Amortissements cumulés</td><td>Taux de renouvellement, âge moyen du patrimoine, valeur patrimoine / hab (2.3)</td></tr>
+          <tr><td>Fonds propres + actifs circ. + dettes CT</td><td>Fonds de roulement, BFR, trésorerie nette (3.1)</td></tr>
+          <tr><td>Encours réel dette</td><td>Capacité de désendettement affinée, encours réel / habitant (1.2)</td></tr>
+          <tr><td>Bases fiscales TF</td><td>Élasticité fiscale (2.2)</td></tr>
+          <tr><td>Emprunts nouveaux</td><td>Emprunts nouveaux / habitant (4.5)</td></tr>
+          <tr><td>Dotations amortissements (auto ou saisi)</td><td>Amortissements / habitant, taux d'amortissement (4.2)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      L'encours réel de la dette, lorsqu'il est saisi, remplace automatiquement le proxy utilisé par défaut
+      (remboursement capital exercice N, chap. 16) dans tous les calculs de ratios d'endettement.
+    </div>
+  </section>
+
+  <!-- ── CALCULS M57 ────────────────────────────────── -->
+  <section id="calculs-autofinancement">
+    <h2 class="section-title">🧮 Calculs M57 — Auto-financement</h2>
+
+    <h3 class="sub-title">Chapitres utilisés</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Famille</th><th>Chapitres</th><th>Rôle</th></tr></thead>
+        <tbody>
+          <tr><td>Produits réels (RRF)</td><td class="ex">70, 73, 731, 74, 75, 013</td><td>Recettes de gestion courante</td></tr>
+          <tr><td>Charges réelles (DRF)</td><td class="ex">011, 012, 014, 65</td><td>Dépenses de gestion courante</td></tr>
+          <tr><td>Charges autres</td><td class="ex">66, 67</td><td>Financières &amp; exceptionnelles (68 exclu — non décaissable)</td></tr>
+          <tr><td>Produits autres</td><td class="ex">76, 77</td><td>Financiers &amp; exceptionnels</td></tr>
+          <tr><td>Remboursement capital</td><td class="ex">16</td><td>Section Investissement — Emprunts</td></tr>
+          <tr><td>Report N‑1</td><td class="ex">002</td><td>Résultat de fonctionnement reporté</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Cascade de calcul</h3>
+    <pre><code>MARGE_BRUTE    = (70 + 73 + 731 + 74 + 75 + 013) − (011 + 012 + 014 + 65)
+ÉPARGNE_BRUTE  = MARGE_BRUTE − (66 + 67) + (76 + 77)
+ÉPARGNE_NETTE  = ÉPARGNE_BRUTE − 16
+DISPONIBILITÉ  = ÉPARGNE_NETTE + 002</code></pre>
+
+    <div class="note tip">
+      <strong>Note 731 :</strong> Le chapitre 731 (Fiscalité locale) coexiste avec le chapitre 73 comme
+      ligne distincte dans l'export. Les deux sont additionnés — pas de double-comptage, chacun représente
+      une catégorie fiscale différente dans cet export.
+    </div>
+  </section>
+
+  <section id="calculs-ratios">
+    <h2 class="section-title">📐 Calculs M57 — Formules des ratios</h2>
+
+    <div class="ratio-group">
+      <div class="ratio-group-title">🧱 1.1 Ratios d'épargne</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ratio</th><th>Formule</th><th>Seuils indicatifs</th></tr></thead>
+          <tbody>
+            <tr><td>Épargne brute</td><td><code>RRF − DRF</code></td><td>—</td></tr>
+            <tr><td>Épargne nette</td><td><code>Épargne brute − Chap. 16</code></td><td>—</td></tr>
+            <tr><td>Taux d'épargne brute</td><td><code>Épargne brute / RRF × 100</code></td><td>&gt; 15 % = sain</td></tr>
+            <tr><td>Taux d'épargne nette</td><td><code>Épargne nette / RRF × 100</code></td><td>&gt; 8 % = sain</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ratio-group">
+      <div class="ratio-group-title">🧱 1.2 Ratios d'endettement</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ratio</th><th>Formule</th><th>Seuils indicatifs</th></tr></thead>
+          <tbody>
+            <tr><td>Encours dette / habitant</td><td><code>Chap. 16 / population</code></td><td>—</td></tr>
+            <tr><td>Encours / RRF</td><td><code>Chap. 16 / RRF × 100</code></td><td>—</td></tr>
+            <tr><td>Capacité de désendettement</td><td><code>Chap. 16 / Épargne brute</code></td><td>&lt; 8 ans = sain ; &gt; 12 ans = alerte</td></tr>
+            <tr><td>Poids des intérêts</td><td><code>Chap. 66 / DRF × 100</code></td><td>&lt; 5 % = normal</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ratio-group">
+      <div class="ratio-group-title">🏗️ 1.3 Ratios d'investissement</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ratio</th><th>Formule</th><th>Interprétation</th></tr></thead>
+          <tbody>
+            <tr><td>Taux d'investissement</td><td><code>(20+204+21+23+27) / (DRF + Dép. inv) × 100</code></td><td>Effort d'équipement</td></tr>
+            <tr><td>Autofinancement investissement</td><td><code>CAF / Dép. inv × 100</code></td><td>Dépendance à l'emprunt</td></tr>
+            <tr><td>Dépenses équipement / hab</td><td><code>(21+23) / population</code></td><td>Niveau d'investissement par habitant</td></tr>
+            <tr><td>Subventions / investissement</td><td><code>Chap. 13 / Dép. inv × 100</code></td><td>Mobilisation de financements externes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ratio-group">
+      <div class="ratio-group-title">🧾 2.1 Structure budgétaire &amp; 3.3 Premium</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ratio</th><th>Formule</th><th>Seuils indicatifs</th></tr></thead>
+          <tbody>
+            <tr><td>Poids des charges de personnel</td><td><code>012 / DRF × 100</code></td><td>&gt; 50 % = vigilance</td></tr>
+            <tr><td>Charges à caractère général</td><td><code>011 / DRF × 100</code></td><td>—</td></tr>
+            <tr><td>Subventions versées</td><td><code>65 / DRF × 100</code></td><td>—</td></tr>
+            <tr><td>Part des recettes fiscales</td><td><code>73 / RRF × 100</code></td><td>—</td></tr>
+            <tr><td>Part des dotations</td><td><code>74 / RRF × 100</code></td><td>—</td></tr>
+            <tr><td>Rigidité structurelle</td><td><code>(012 + 66 + 655) / DRF × 100</code></td><td>&lt; 60 % = confortable</td></tr>
+            <tr><td>Autonomie financière</td><td><code>(73 + 75) / RRF × 100</code></td><td>&gt; 60 % = bonne autonomie</td></tr>
+            <tr><td>Autonomie fiscale</td><td><code>73 / (73 + 75) × 100</code></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPORT PDF ─────────────────────────────────── -->
+  <section id="export-pdf">
+    <h2 class="section-title">📄 Export PDF</h2>
+    <p>Accessible depuis le bouton <strong>"Générer le PDF complet"</strong> dans la sidebar.
+       Généré avec <strong>ReportLab</strong> (sans kaleido ni dépendance externe).</p>
+    <h3 class="sub-title">Contenu du PDF</h3>
+    <ol>
+      <li><strong>Page de garde</strong> — titre, budget, date d'export, nombre de lignes</li>
+      <li><strong>Vue d'ensemble</strong> — tableau Prévu/Réalisé/Taux par section et sens</li>
+      <li><strong>Fonctionnement</strong> — détail par chapitre (Dépenses + Recettes)</li>
+      <li><strong>Investissement</strong> — détail par chapitre (Dépenses + Recettes)</li>
+      <li><strong>Évolution N‑5</strong> — tableau historique par section</li>
+      <li><strong>Grand Livre — Top 30 tiers</strong> — montants TTC des liquidations</li>
+    </ol>
+    <p>Un bandeau en-tête (budget + date) et pied de page (page / PPEI) s'affichent sur chaque page.</p>
+  </section>
+
+  <!-- ── COMPILATION ────────────────────────────────── -->
+  <section id="compilation">
+    <h2 class="section-title">⚙️ Compilation PyInstaller</h2>
+    <pre><code>pyinstaller ppei_budget.spec --clean</code></pre>
+    <p>Le fichier <code>ppei_budget.spec</code> configure :</p>
+    <ul>
+      <li>Point d'entrée : <code>run_app.py</code></li>
+      <li>Collecte complète Streamlit via <code>collect_all("streamlit")</code></li>
+      <li>Inclusion des dossiers <code>core/</code>, <code>ui/</code>, <code>assets/</code>, <code>app.py</code></li>
+      <li>Hidden imports : plotly, reportlab, chardet, psutil, openpyxl</li>
+      <li>Mode <code>console=False</code> (pas de fenêtre console Windows)</li>
+    </ul>
+    <div class="note warning">
+      <strong>⚠️</strong> La résolution des chemins en mode frozen utilise <code>sys._MEIPASS</code>.
+      Toujours tester l'exécutable final après compilation — les assets peuvent nécessiter un ajustement de chemin.
+    </div>
+  </section>
+
+  <section id="inno">
+    <h2 class="section-title">📦 Inno Setup 6 — Installeur Windows</h2>
+    <pre><code>iscc ppei_budget_setup.iss</code></pre>
+    <p>Paramètres clés du script <code>ppei_budget_setup.iss</code> :</p>
+    <ul>
+      <li>Répertoire source : <code>dist\PPEI-BudgetFinances\</code></li>
+      <li>Installation sans droits administrateur (<code>PrivilegesRequired=lowest</code>)</li>
+      <li>Raccourci Bureau optionnel</li>
+      <li>Lancement automatique après installation</li>
+      <li>Interface en français (<code>French.isl</code>)</li>
+      <li>Compression LZMA2 ultra</li>
+    </ul>
+  </section>
+
+  <!-- ── VERSIONS ───────────────────────────────────── -->
+  <section id="versions">
+    <h2 class="section-title">📋 Historique des versions</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Version</th><th>Date</th><th>Modifications</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-blue">v2.1.0</span></td>
+            <td>Juin 2026</td>
+            <td>Saisie complémentaire (bilan, fiscalité, dette) — ratios patrimoniaux et trésorerie débloqués — auto-calcul depuis situation — 9 onglets</td>
+          </tr>
+          <tr>
+            <td><span class="badge" style="background:#475569;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.73rem;font-weight:600;">v2.0.0</span></td>
+            <td>Juin 2026</td>
+            <td>Tableau recettes Vue d'ensemble — Évolution N‑5 → N — filtre chapitre Grand Livre — expanders Tableau brut — thème sombre Plotly universel</td>
+          </tr>
+          <tr>
+            <td><span class="badge" style="background:#94a3b8;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.73rem;font-weight:600;">v1.0.0</span></td>
+            <td>Juin 2026</td>
+            <td>Version initiale — 8 onglets, calculs M57 validés comptablement, 40+ ratios, export PDF ReportLab, distribution Windows PyInstaller + Inno Setup 6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>PPEI — Plateforme Publique d'Échanges et d'Informations &nbsp;|&nbsp; v2.1.0</span>
+  <span>Auteur : Philippe PETIT &nbsp;|&nbsp; Données : Situation M57 + Grand Livre</span>
+</footer>
+
+<script>
+  // Highlight lien actif au scroll
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const links    = document.querySelectorAll('nav#sidebar a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    links.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
