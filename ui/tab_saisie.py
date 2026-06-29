@@ -12,7 +12,7 @@ from core.saisie import (
     get_valeur, set_valeur, reset_budget, get_all,
     CHAMPS_BILAN, CHAMPS_FISCALITE, CHAMPS_DETTE,
 )
-from core.utils import fmt_euros
+from core.utils import fmt_euros, bandeau_budget_independant
 
 
 # ---------------------------------------------------------------------------
@@ -80,6 +80,11 @@ def _groupe_saisie(budget: str, champs: list, prefixe_key: str):
 
 def render(df_sit: pd.DataFrame, budget_label: str):
     st.markdown("### 📝 Saisie complémentaire")
+
+    # Bandeau budget indépendant
+    _budget_courant_saisie = st.session_state.get("saisie_budget_sel", "")
+    bandeau_budget_independant(_budget_courant_saisie)
+
     st.caption(
         "Ces données complètent les exports CSV pour débloquer les ratios patrimoniaux, "
         "de trésorerie et fiscaux. Elles sont conservées pendant toute la session."

@@ -13,7 +13,7 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 from core.ratios import calcul_ratios, calcul_ratios_historique
-from core.utils import fmt_euros, fmt_pct, plotly_base_layout
+from core.utils import fmt_euros, fmt_pct, plotly_base_layout, bandeau_budget_independant
 
 # Valeurs par défaut INSEE
 DEFAULT_POPULATION = 2243
@@ -222,6 +222,11 @@ def _grille(ratios: list, groupe: str, nb_cols: int = 3,
 
 def render(df_sit: pd.DataFrame, df_sit_complet: pd.DataFrame):
     st.markdown("### 📐 Ratios M57")
+
+    # Bandeau budget indépendant
+    _budgets_courants = st.session_state.get("ratio_budgets", [])
+    _budget_affiche_courant = _budgets_courants[0] if _budgets_courants else ""
+    bandeau_budget_independant(_budget_affiche_courant)
 
     # -----------------------------------------------------------------------
     # Paramètres démographiques + sélection budgets
