@@ -3,8 +3,6 @@
 
 import streamlit as st
 
-from pathlib import Path
-
 # ---------------------------------------------------------------------------
 # Constantes
 # ---------------------------------------------------------------------------
@@ -255,25 +253,76 @@ def sidebar_filters(df_sit, df_gl):
 
     # Liens & infos
     st.sidebar.markdown("---")
-    st.sidebar.markdown("🐛 [Signaler un bug](mailto:contact@ppei.fr)")
-
-    # Documentation locale — DANS la sidebar
-    ROOT_DIR = Path(__file__).resolve().parent.parent
-    url_doc  = ROOT_DIR / "assets" / "documentation.html"
-    if url_doc.exists():
-        try:
-            with open(url_doc, "r", encoding="utf-8") as f:
-                st.sidebar.download_button(        # ← st.sidebar, pas st.
-                    label="📄 Télécharger la documentation",
-                    data=f.read(),
-                    file_name="documentation.html",
-                    mime="text/html",
-                )
-        except IOError as e:
-            st.sidebar.error(f"⚠️ Impossible de lire la documentation : {e}")
-    else:
-        st.sidebar.caption("📄 Documentation locale indisponible.")
-
+    st.sidebar.markdown(
+        "🐛 [Signaler un bug](mailto:contact@ppei.fr) | "
+        "📘 [Documentation](#)"
+    )
     st.sidebar.markdown(f"<small>{APP_VERSION}</small>", unsafe_allow_html=True)
 
     return df_sit_f, df_gl_f, budget_sel
+
+
+# ---------------------------------------------------------------------------
+# Bandeau sélection budget indépendant
+# ---------------------------------------------------------------------------
+
+def bandeau_budget_independant(budget_actif: str = "") -> None:
+    """
+    Affiche un bandeau HTML informatif indiquant que l'onglet
+    dispose de son propre filtre budget, indépendant de la sidebar.
+    """
+    if budget_actif:
+        contenu = f"""
+        <div style="
+            background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        ">
+            <div style="font-size: 1.6rem;">📋</div>
+            <div>
+                <div style="color:#bfdbfe;font-size:0.72rem;font-weight:700;
+                            letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;">
+                    Filtre budget indépendant
+                </div>
+                <div style="color:#ffffff;font-size:0.95rem;font-weight:600;">
+                    Budget actif : <span style="color:#fbbf24;">{budget_actif}</span>
+                </div>
+                <div style="color:#93c5fd;font-size:0.75rem;margin-top:3px;">
+                    ℹ️ Ce filtre est indépendant de la sélection principale de la sidebar.
+                </div>
+            </div>
+        </div>
+        """
+    else:
+        contenu = """
+        <div style="
+            background: linear-gradient(135deg, #7c2d12 0%, #ea580c 100%);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        ">
+            <div style="font-size: 1.6rem;">⚠️</div>
+            <div>
+                <div style="color:#fed7aa;font-size:0.72rem;font-weight:700;
+                            letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;">
+                    Sélection requise
+                </div>
+                <div style="color:#ffffff;font-size:0.95rem;font-weight:600;">
+                    Veuillez sélectionner votre budget ci-dessous
+                </div>
+                <div style="color:#fdba74;font-size:0.75rem;margin-top:3px;">
+                    ℹ️ Cet onglet dispose de son propre filtre budget,
+                    indépendant de la sélection principale.
+                </div>
+            </div>
+        </div>
+        """
+    import streamlit as st
+    st.markdown(contenu, unsafe_allow_html=True)
