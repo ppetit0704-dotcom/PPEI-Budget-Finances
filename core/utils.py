@@ -100,12 +100,145 @@ CSS = """
     padding-top: 12px;
     border-top: 1px solid #e2e8f0;
 }
+
+/* ===========================================================================
+   RESPONSIVE MOBILE — breakpoint 768px
+   =========================================================================== */
+
+.ppei-mobile-toggle { display: none; }
+
+@media (max-width: 768px) {
+
+    .ppei-mobile-toggle {
+        display: block !important;
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 999999;
+        background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        font-size: 1.3rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        cursor: pointer;
+    }
+
+    .ppei-header {
+        padding: 14px 16px;
+        margin-bottom: 14px;
+        margin-top: 50px;
+    }
+    .ppei-header h1 { font-size: 1.15rem; line-height: 1.3; }
+    .ppei-header p  { font-size: 0.78rem; }
+
+    [data-testid="stMetric"] { padding: 8px 10px; }
+    [data-testid="stMetricLabel"] { font-size: 0.68rem !important; }
+    [data-testid="stMetricValue"] { font-size: 1.05rem !important; }
+
+    [data-testid="stHorizontalBlock"] {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    [data-testid="stHorizontalBlock"] > div {
+        min-width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+
+    .ppei-keep-2col [data-testid="stHorizontalBlock"] > div {
+        min-width: 48% !important;
+        flex: 1 1 48% !important;
+    }
+
+    [data-testid="stTabs"] { overflow-x: auto; }
+    [data-testid="stTabs"] button {
+        font-size: 0.72rem;
+        padding: 6px 10px;
+        white-space: nowrap;
+    }
+
+    .ppei-bandeau-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+
+    .jauge-label { font-size: 0.74rem; }
+    .jauge-pct   { font-size: 0.70rem; }
+
+    .ppei-card-ratio { padding: 9px !important; }
+
+    .stDataFrame, [data-testid="stDataFrame"] { font-size: 0.78rem; }
+
+    [data-testid="stExpander"] summary {
+        font-size: 0.82rem;
+        padding: 8px 10px;
+    }
+
+    .badge-budget { font-size: 0.72rem; padding: 2px 9px; }
+
+    .stButton button, .stDownloadButton button {
+        width: 100%;
+        font-size: 0.85rem;
+    }
+
+    [data-testid="stNumberInput"] input,
+    [data-baseweb="select"] {
+        min-height: 42px;
+    }
+}
+
+@media (max-width: 420px) {
+    .ppei-header h1 { font-size: 1rem; }
+    [data-testid="stMetricValue"] { font-size: 0.92rem !important; }
+    [data-testid="stTabs"] button { font-size: 0.66rem; padding: 5px 7px; }
+}
+
+/* Bandeau budget indépendant (Ratios, Saisie complémentaire) */
+.ppei-bandeau {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+    .ppei-bandeau { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
 </style>
 """
 
 
 def inject_css():
     st.markdown(CSS, unsafe_allow_html=True)
+
+
+def mobile_sidebar_toggle():
+    """
+    Bouton flottant ☰ visible uniquement sur mobile (<768px)
+    qui ouvre/ferme la sidebar Streamlit native via JS.
+    """
+    st.markdown(
+        """
+        <button class="ppei-mobile-toggle" onclick="
+            const sidebar = window.parent.document.querySelector('[data-testid=stSidebar]');
+            const collapsedControl = window.parent.document.querySelector('[data-testid=stSidebarCollapsedControl]');
+            if (sidebar) {
+                const isHidden = sidebar.getBoundingClientRect().width === 0;
+                if (isHidden && collapsedControl) {
+                    collapsedControl.click();
+                } else {
+                    const closeBtn = window.parent.document.querySelector('[data-testid=stSidebar] button[kind=header]');
+                    if (closeBtn) closeBtn.click();
+                }
+            }
+        ">☰</button>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -178,17 +311,19 @@ def plotly_base_layout(height=320, margin=None, title=None, barmode=None) -> dic
     """
     Layout Plotly thème sombre explicite.
     Fond #1e293b, textes blancs/clairs forcés — lisible quel que soit le thème Streamlit.
+    Tailles de police majorées légèrement pour rester lisibles sur petit écran.
     """
     m = margin or dict(t=30, b=30, l=0, r=10)
     layout = dict(
         height=height,
         margin=m,
+        autosize=True,
         paper_bgcolor=PLOTLY_PAPER_BG,
         plot_bgcolor=PLOTLY_BG,
-        font=dict(color=PLOTLY_FONT_COLOR, family="Segoe UI, system-ui, sans-serif", size=11),
+        font=dict(color=PLOTLY_FONT_COLOR, family="Segoe UI, system-ui, sans-serif", size=12),
         legend=dict(
             orientation="h", y=1.08, x=0,
-            font=dict(color=PLOTLY_FONT_COLOR, size=10),
+            font=dict(color=PLOTLY_FONT_COLOR, size=11),
             bgcolor="rgba(30,41,59,0.85)",
             bordercolor=PLOTLY_GRID_COLOR,
             borderwidth=1,
@@ -196,21 +331,23 @@ def plotly_base_layout(height=320, margin=None, title=None, barmode=None) -> dic
         xaxis=dict(
             gridcolor=PLOTLY_GRID_COLOR,
             zerolinecolor=PLOTLY_GRID_COLOR,
-            tickfont=dict(color=PLOTLY_FONT_COLOR, size=10),
+            tickfont=dict(color=PLOTLY_FONT_COLOR, size=11),
             title=dict(font=dict(color=PLOTLY_FONT_COLOR)),
             linecolor=PLOTLY_GRID_COLOR,
+            automargin=True,
         ),
         yaxis=dict(
             gridcolor=PLOTLY_GRID_COLOR,
             zerolinecolor=PLOTLY_GRID_COLOR,
-            tickfont=dict(color=PLOTLY_FONT_COLOR, size=10),
+            tickfont=dict(color=PLOTLY_FONT_COLOR, size=11),
             title=dict(font=dict(color=PLOTLY_FONT_COLOR)),
             linecolor=PLOTLY_GRID_COLOR,
+            automargin=True,
         ),
-        hoverlabel=dict(bgcolor="#0f172a", font_color="#e2e8f0", font_size=11),
+        hoverlabel=dict(bgcolor="#0f172a", font_color="#e2e8f0", font_size=12),
     )
     if title:
-        layout["title"] = dict(text=title, font=dict(color=PLOTLY_FONT_TITLE, size=13), x=0)
+        layout["title"] = dict(text=title, font=dict(color=PLOTLY_FONT_TITLE, size=14), x=0)
     if barmode:
         layout["barmode"] = barmode
     return layout
@@ -273,15 +410,7 @@ def bandeau_budget_independant(budget_actif: str = "") -> None:
     """
     if budget_actif:
         contenu = f"""
-        <div style="
-            background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);
-            border-radius: 10px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        ">
+        <div class="ppei-bandeau" style="background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);">
             <div style="font-size: 1.6rem;">📋</div>
             <div>
                 <div style="color:#bfdbfe;font-size:0.72rem;font-weight:700;
@@ -299,15 +428,7 @@ def bandeau_budget_independant(budget_actif: str = "") -> None:
         """
     else:
         contenu = """
-        <div style="
-            background: linear-gradient(135deg, #7c2d12 0%, #ea580c 100%);
-            border-radius: 10px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        ">
+        <div class="ppei-bandeau" style="background: linear-gradient(135deg, #7c2d12 0%, #ea580c 100%);">
             <div style="font-size: 1.6rem;">⚠️</div>
             <div>
                 <div style="color:#fed7aa;font-size:0.72rem;font-weight:700;
