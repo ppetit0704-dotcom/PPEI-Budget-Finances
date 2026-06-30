@@ -8,7 +8,7 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 
 APP_TITLE   = "PPEI — Budget & Finances"
-APP_VERSION = "v2.0.0"
+APP_VERSION = "V2.2.1"
 APP_ICON    = "💰"
 
 COULEUR_DEP = "#2563a8"   # bleu dépenses
