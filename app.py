@@ -102,6 +102,7 @@ st.divider()
 
 from core.utils import (
     inject_css, sidebar_filters, APP_TITLE, APP_VERSION, APP_ICON, badge_budget,
+    mobile_sidebar_toggle,
 )
 from core.data_loader import get_situation, get_grand_livre
 from core.pdf_builder import generate_pdf
@@ -118,6 +119,7 @@ import ui.tab_saisie      as tab_saisie
 # CSS
 # ---------------------------------------------------------------------------
 inject_css()
+mobile_sidebar_toggle()
 
 # ---------------------------------------------------------------------------
 # En-tête
