@@ -57,7 +57,7 @@ with col_texte:
         <div style='margin-top:10px;'>
             <h1 class='main-title'>📊 Tableau de bord Budget/Finances (M57)</h1><br>
             <div class='sub-title'>
-                Version 1.0.0 — Millésime 2026<br>
+                Version 2.2.1 — Millésime 2026<br>
                 Auteur : Philippe PETIT |
                 <a href='mailto:philippe.petit.lafiou@outlook.fr?subject=Plateforme Publique [RPLS]'>Contact</a>
             </div>
