@@ -8,7 +8,7 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 
 APP_TITLE   = "PPEI — Budget & Finances"
-APP_VERSION = "V2.2.1"
+APP_VERSION = "v2.0.0"
 APP_ICON    = "💰"
 
 COULEUR_DEP = "#2563a8"   # bleu dépenses
@@ -218,24 +218,81 @@ def inject_css():
 
 def mobile_sidebar_toggle():
     """
-    Bouton flottant ☰ visible uniquement sur mobile (<768px)
-    qui ouvre/ferme la sidebar Streamlit native via JS.
+    Bouton flottant ☰ visible uniquement sur mobile (<768px).
+    Stratégie robuste multi-sélecteurs pour couvrir toutes les versions
+    de Streamlit — essaie plusieurs selectors CSS dans l'ordre.
     """
     st.markdown(
         """
-        <button class="ppei-mobile-toggle" onclick="
-            const sidebar = window.parent.document.querySelector('[data-testid=stSidebar]');
-            const collapsedControl = window.parent.document.querySelector('[data-testid=stSidebarCollapsedControl]');
-            if (sidebar) {
-                const isHidden = sidebar.getBoundingClientRect().width === 0;
-                if (isHidden && collapsedControl) {
-                    collapsedControl.click();
+        <button class="ppei-mobile-toggle" id="ppei-toggle-btn" title="Ouvrir/fermer le menu">☰</button>
+        <script>
+        (function() {
+            const btn = window.parent.document.getElementById('ppei-toggle-btn')
+                     || document.getElementById('ppei-toggle-btn');
+
+            function tryClick() {
+                const doc = window.parent.document;
+
+                // Sélecteurs testés dans l'ordre — du plus récent au plus ancien
+                const selectors = [
+                    // Streamlit >= 1.30 : bouton collapse/expand natif
+                    'button[data-testid="stSidebarNavButton"]',
+                    'button[data-testid="stBaseButton-headerNoPadding"]',
+                    // Bouton collapse visible quand sidebar ouverte
+                    '[data-testid="stSidebar"] button[kind="header"]',
+                    '[data-testid="stSidebar"] button[class*="close"]',
+                    // Bouton expand visible quand sidebar fermée
+                    '[data-testid="stSidebarCollapsedControl"] button',
+                    '[data-testid="stSidebarCollapsedControl"]',
+                    // Fallback générique — premier bouton dans la sidebar ou son contrôle
+                    'section[data-testid="stSidebar"] ~ div button',
+                    'button[title="Close sidebar"]',
+                    'button[title="Open sidebar"]',
+                    // Streamlit 1.20-1.28
+                    '.css-1rs6os button',
+                    '.css-17ziqus button',
+                ];
+
+                for (const sel of selectors) {
+                    const el = doc.querySelector(sel);
+                    if (el) {
+                        el.click();
+                        return true;
+                    }
+                }
+
+                // Dernier recours : chercher tous les boutons du header Streamlit
+                const allBtns = doc.querySelectorAll('header button, [data-testid*="sidebar"] button');
+                if (allBtns.length > 0) {
+                    allBtns[0].click();
+                    return true;
+                }
+                return false;
+            }
+
+            function attachClick() {
+                const realBtn = window.parent.document.getElementById('ppei-toggle-btn')
+                             || document.getElementById('ppei-toggle-btn');
+                if (realBtn) {
+                    realBtn.onclick = function(e) {
+                        e.preventDefault();
+                        tryClick();
+                    };
                 } else {
-                    const closeBtn = window.parent.document.querySelector('[data-testid=stSidebar] button[kind=header]');
-                    if (closeBtn) closeBtn.click();
+                    setTimeout(attachClick, 300);
                 }
             }
-        ">☰</button>
+
+            // Attendre que Streamlit ait fini de rendre la page
+            if (document.readyState === 'complete') {
+                setTimeout(attachClick, 500);
+            } else {
+                window.addEventListener('load', function() {
+                    setTimeout(attachClick, 500);
+                });
+            }
+        })();
+        </script>
         """,
         unsafe_allow_html=True,
     )
